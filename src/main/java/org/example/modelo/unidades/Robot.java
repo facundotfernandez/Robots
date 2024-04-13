@@ -4,8 +4,8 @@ public class Robot extends Personaje{
 
     private final int multiplicador;
 
-    public Robot(int puntaje, int multiplicador) {
-        super(puntaje);
+    public Robot(int multiplicador) {
+        super(multiplicador * 10);
         this.multiplicador = multiplicador;
     }
 
