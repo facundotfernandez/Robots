@@ -1,45 +1,32 @@
 package org.example.modelo.unidades;
 
-import java.util.Random;
-
 public class Jugador extends Personaje{
-    private int puntos;
-    private int teletrnsp_segura_disp;
+    private final String nombre;
+    private int tp_segura;
 
-    public Jugador(int x, int y) {
-        super(x, y);
-        this.puntos = 0;
-        this.teletrnsp_segura_disp = 0;
+    public Jugador(String nombre, int tps) {
+        super(0);
+        this.nombre = nombre;
+        this.tp_segura = tps;
     }
 
-    public void setPuntos(int puntos) {
-        this.puntos = puntos;
+    public void add_puntos(int puntos){
+        this.puntaje += puntos;
+    }
+    public void add_tps_seguros(int tps){
+        this.tp_segura += tps;
     }
 
-    public int getPuntos() {
-        return puntos;
+    private void hay_Teletrnsp_segura_disp() {
+        if(tp_segura <= 0)throw new IndexOutOfBoundsException("no hay tps seguros disponibles.");
     }
 
-    public boolean hay_Teletrnsp_segura_disp() {
-        return (teletrnsp_segura_disp > 0);
-    }
-
-    public int getTeletrnsp_seguras() {
-        return teletrnsp_segura_disp;
-    }
-
-    //esta "mal" creo yo q estè aca xq medio es lo que hablabamos que el jugador en si no tendria q saber de "cosas" del tablero.
-    //lo voy a dejar igual despues vemos
-    public void teletransportacion_aleaotira(int limite_filas, int limite_columnas){
-        Random rnd = new Random();
-        int columna = rnd.nextInt(limite_columnas);
-        int fila = rnd.nextInt(limite_filas);
-        setColumna(columna);
-        setFila(fila);
-    }
     public void usar_teletransp_segura(){
-        if(teletrnsp_segura_disp > 0){
-            teletrnsp_segura_disp--;
-        }
+        hay_Teletrnsp_segura_disp();
+        tp_segura--;
+    }
+
+    public String getNombre() {
+        return nombre;
     }
 }
