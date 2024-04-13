@@ -12,7 +12,27 @@ public class Tablero<T> {
         return grilla;
     }
 
-    public T getOcupante(int fila, int columna) {
+    public T getOcupante(int fila, int columna) throws Exception {
         return grilla.getOcupante(fila, columna);
+    }
+
+    public Celda<T> getCeldaCentral() {
+        return grilla.getCelda();
+    }
+
+    public Celda<T> getCelda(int fila, int columna) throws CeldaInvalidaException {
+        return grilla.getCelda(fila, columna);
+    }
+
+    public Celda<T> getCelda() {
+        return grilla.getCeldaRandom();
+    }
+
+    public void ocuparCeldaRandom(T ocupante) throws CeldaInvalidaException {
+        grilla.getCeldaRandom().ocupar(ocupante);
+    }
+
+    public void ocuparCeldaCentral(T ocupante) throws CeldaInvalidaException {
+        getCeldaCentral().ocupar(ocupante);
     }
 }

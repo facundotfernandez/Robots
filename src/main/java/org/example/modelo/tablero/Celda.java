@@ -14,25 +14,28 @@ public class Celda<T> {
         this.ocupante = ocupante;
     }
 
-    int getX() {
+    public int getX() {
         return coordenadas.x();
     }
 
-    int getY() {
+    public int getY() {
         return coordenadas.y();
     }
 
-    T getOcupante() {
+    public T getOcupante() throws CeldaInvalidaException {
+        if (estaVacia()) throw new CeldaInvalidaException("La celda no está ocupada");
         return ocupante;
     }
 
-    T vaciar() {
+    public T vaciar() throws CeldaInvalidaException {
+        if (estaVacia()) throw new CeldaInvalidaException("La celda no está ocupada");
         var anteriorOcupante = ocupante;
         this.ocupante = null;
         return anteriorOcupante;
     }
 
-    void ocupar(T ocupante) {
+    public void ocupar(T ocupante) throws CeldaInvalidaException {
+        if (!estaVacia()) throw new CeldaInvalidaException("La celda ya está ocupada");
         this.ocupante = ocupante;
     }
 
