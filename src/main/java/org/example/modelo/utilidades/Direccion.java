@@ -23,13 +23,13 @@ public enum Direccion {
         return Direccion.values()[i];
     }
 
-    public static Direccion getDireccion(int[] desplazamiento) {
+    public static int getDireccion(int[] desplazamiento) {
         for (Direccion direccion : Direccion.values()) {
             if (Arrays.equals(desplazamiento, direccion.getDireccion())) {
-                return direccion;
+                return direccion.ordinal();
             }
         }
-        return null;
+        return -1;
     }
 
     public int[] getDireccion() {
