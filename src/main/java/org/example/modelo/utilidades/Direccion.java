@@ -43,4 +43,11 @@ public enum Direccion {
     public int getColumna() {
         return direccion[1];
     }
+
+    public int calcularDistancia(int y1, int x1, int y2, int x2) {
+        int dy = y2 - y1;
+        int dx = x2 - x1;
+
+        return Direccion.getDireccion(new int[]{(dy == 0) ? 0 : (dy / Math.abs(dy)), (dx == 0) ? 0 : (dx / Math.abs(dx))});
+    }
 }
