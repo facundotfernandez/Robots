@@ -1,6 +1,6 @@
 package org.example.modelo.tablero;
 
-public class CeldaInvalidaException extends Exception {
+public class CeldaInvalidaException extends IndexOutOfBoundsException {
 
     public CeldaInvalidaException() {
         super();
@@ -8,5 +8,9 @@ public class CeldaInvalidaException extends Exception {
 
     public CeldaInvalidaException(String message) {
         super(message);
+    }
+
+    public CeldaInvalidaException(String message, int fila, int columna) {
+        super(message + " (" + fila + "," + columna + ")");
     }
 }
