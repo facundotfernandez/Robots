@@ -1,26 +1,19 @@
 package org.example.modelo.tablero;
 
 import org.example.modelo.unidades.Robot;
-import org.example.modelo.utilidades.Direccion;
 
 import java.util.LinkedList;
 import java.util.Random;
 
-public class Grilla<T> {
-
+public class Tablero2<T> {
     private final int filas;
     private final int columnas;
-
     private final LinkedList<LinkedList<Celda<T>>> grilla;
 
-    public Grilla(int filas, int columnas) {
+    public Tablero2(int filas, int columnas) {
         this.filas = filas;
         this.columnas = columnas;
         this.grilla = inicializarGrilla(filas, columnas);
-    }
-
-    private void validarUbicacion(int fila, int columna) throws CeldaInvalidaException {
-        if (!estaDentro(fila, columna)) throw new CeldaInvalidaException("La celda no pertenece a la grilla");
     }
 
     private LinkedList<LinkedList<Celda<T>>> inicializarGrilla(int filas, int columnas) {
@@ -44,35 +37,39 @@ public class Grilla<T> {
         return columnas;
     }
 
-    public LinkedList<LinkedList<Celda<T>>> getGrilla() {
-        return grilla;
-    }
-
-    public T getOcupante(int fila, int columna) throws Exception {
-        validarUbicacion(fila, columna);
-        return grilla.get(fila).get(columna).getOcupante();
-    }
-
-    private boolean estaDentro(int fila, int columna) {
-        return fila < filas && columna < columnas;
-    }
-
-    private boolean estaVacia(int fila, int columna) throws CeldaInvalidaException {
-        validarUbicacion(fila, columna);
-        return grilla.get(fila).get(columna).estaVacia();
-    }
-
     public Celda<T> getCelda(int fila, int columna) throws CeldaInvalidaException {
         validarUbicacion(fila, columna);
         return grilla.get(fila).get(columna);
     }
 
-    public Celda<T> getCelda() {
+    public Celda<T> getCeldaCentral() {
         return grilla.get(filas / 2).get(columnas / 2);
     }
 
     public Celda<T> getCeldaRandom() {
         return grilla.get(new Random().nextInt(filas)).get(new Random().nextInt(columnas));
+    }
+
+    public void ocuparCeldaCentral(T ocupante) throws CeldaInvalidaException {
+        getCeldaCentral().ocupar(ocupante);
+    }
+
+    public Celda<T> ocuparCeldaRandom(T ocupante) throws CeldaInvalidaException {
+        Celda<T> celda = getCeldaRandom();
+
+        if (celda.estaVacia()) {
+            celda.ocupar(ocupante);
+        }
+
+        return celda;
+    }
+
+    private void validarUbicacion(int fila, int columna) throws CeldaInvalidaException {
+        if (!estaDentro(fila, columna)) throw new CeldaInvalidaException("La celda no pertenece a la grilla");
+    }
+
+    private boolean estaDentro(int fila, int columna) {
+        return fila < filas && columna < columnas;
     }
 
     public boolean moverPersonaje(Celda<T> origen, Celda<T> destino) throws CeldaInvalidaException {
@@ -85,7 +82,8 @@ public class Grilla<T> {
         }
     }
     public void explotarRobot(int fila, int columna) throws CeldaInvalidaException {
-        grilla.get(fila).get(columna).ocupar((T) new Robot(0,null));
+        grilla.get(fila).get(columna).ocupar((new Robot(0,null)));
 
     }
+}
 }

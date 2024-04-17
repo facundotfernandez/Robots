@@ -28,8 +28,10 @@ public class Tablero<T> {
         return grilla.getCeldaRandom();
     }
 
-    public void ocuparCeldaRandom(T ocupante) throws CeldaInvalidaException {
-        grilla.getCeldaRandom().ocupar(ocupante);
+    public Celda<T> ocuparCeldaRandom(T ocupante) throws CeldaInvalidaException {
+        Celda<T> celda = grilla.getCeldaRandom();
+        celda.ocupar(ocupante);
+        return celda;
     }
 
     public void ocuparCeldaCentral(T ocupante) throws CeldaInvalidaException {
