@@ -1,18 +1,23 @@
 package org.example.modelo.unidades;
 
-public class Robot extends Personaje{
+public class Robot extends Personaje {
 
     private final int multiplicador;
-    private final Jugador jugador;
 
-    public Robot(int multiplicador, Jugador jugador) {
+    public Robot(int multiplicador) {
         super(multiplicador * 10);
         this.multiplicador = multiplicador;
-        this.jugador = jugador;
+    }
+
+    public Robot(int multiplicador, int fila, int columna) {
+        super(multiplicador * 10, fila, columna);
+        this.multiplicador = multiplicador;
     }
 
     public int getMultiplicador() {
         return multiplicador;
     }
+
+
 }
 
