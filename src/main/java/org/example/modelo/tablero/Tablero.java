@@ -95,14 +95,15 @@ public class Tablero<T> {
     }
 
     public int[] ubicar(T ocupante) throws CeldaOcupadaException {
-        Celda<T> celdaRandom = getCeldaRandom();
-        try {
-            celdaRandom.getOcupante();
-        } catch (CeldaDesocupadaException e) {
-            ubicar(ocupante);
+        while (true) {
+            Celda<T> celdaRandom = getCeldaRandom();
+            try {
+                celdaRandom.getOcupante();
+                celdaRandom.ocupar(ocupante);
+                return new int[]{celdaRandom.getFila(), celdaRandom.getColumna()};
+            } catch (CeldaDesocupadaException _) {
+            }
         }
-        celdaRandom.ocupar(ocupante);
-        return new int[]{celdaRandom.getFila(), celdaRandom.getColumna()};
     }
 
     public void ubicar(T ocupante, int fila, int columna) throws CeldaOcupadaException {
