@@ -1,4 +1,4 @@
 package org.example.modelo.tablero;
 
-public record Punto(int x, int y) {
+public record Punto(int fila, int columna) {
 }

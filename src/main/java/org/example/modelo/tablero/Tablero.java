@@ -1,5 +1,8 @@
 package org.example.modelo.tablero;
 
+import org.example.modelo.jugabilidad.CeldaDesocupadaException;
+import org.example.modelo.jugabilidad.CeldaOcupadaException;
+
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -46,16 +49,15 @@ public class Tablero<T> {
         return grilla.get(new Random().nextInt(filas)).get(new Random().nextInt(columnas));
     }
 
-    private void ocuparCeldaCentral(T ocupante) throws CeldaInvalidaException {
+    private void ocuparCeldaCentral(T ocupante) throws CeldaInvalidaException, CeldaOcupadaException {
         getCeldaCentral().ocupar(ocupante);
     }
 
-    private void ocuparCeldaRandom(T ocupante) throws CeldaInvalidaException {
+    private void ocuparCeldaRandom(T ocupante) throws CeldaInvalidaException, CeldaOcupadaException {
         Celda<T> celda;
         do {
             celda = getCeldaRandom();
         } while (!celda.estaVacia());
-
         celda.ocupar(ocupante);
     }
 
@@ -65,13 +67,18 @@ public class Tablero<T> {
     }
 
     private void estaDentro(Celda<T> celda) throws CeldaInvalidaException {
-        if (celda.getY() < 0 || celda.getY() > filas || celda.getX() < 0 || celda.getX() > columnas)
+        if (celda.getFila() < 0 || celda.getFila() > filas || celda.getColumna() < 0 || celda.getColumna() > columnas)
             throw new CeldaInvalidaException("La celda no pertenece a la grilla");
     }
 
-    public T getOcupante(int fila, int columna) throws CeldaInvalidaException {
-        estaDentro(fila, columna);
-        return grilla.get(fila).get(columna).getOcupante();
+    private T getOcupante(Celda<T> celda) throws CeldaInvalidaException, CeldaDesocupadaException {
+        estaDentro(celda);
+        return celda.getOcupante();
+    }
+
+    public T getOcupante(int fila, int columna) throws CeldaInvalidaException, CeldaDesocupadaException {
+        Celda<T> celda = getCelda(fila, columna);
+        return getOcupante(celda);
     }
 
     private boolean estaVacia(int fila, int columna) throws CeldaInvalidaException {
@@ -79,18 +86,33 @@ public class Tablero<T> {
         return grilla.get(fila).get(columna).estaVacia();
     }
 
-    public void mover(Celda<T> origen, Celda<T> destino) throws CeldaInvalidaException {
+    public void mover(int filaOrigen, int columnaOrigen, int[] direccion) throws CeldaInvalidaException, CeldaDesocupadaException, CeldaOcupadaException {
+        Celda<T> origen = getCelda(filaOrigen, columnaOrigen);
+        Celda<T> destino = getCelda(filaOrigen + direccion[0], columnaOrigen + direccion[1]);
         estaDentro(origen);
         estaDentro(destino);
         destino.ocupar(origen.vaciar());
-    } // TODO Ver tema crasheos
-
-    public void ubicar(T ocupante) {
     }
 
-    public void ubicarEnCentro(T ocupante) {
+    public int[] ubicar(T ocupante) throws CeldaOcupadaException {
+        Celda<T> celdaRandom = getCeldaRandom();
+        try {
+            celdaRandom.getOcupante();
+        } catch (CeldaDesocupadaException e) {
+            ubicar(ocupante);
+        }
+        celdaRandom.ocupar(ocupante);
+        return new int[]{celdaRandom.getFila(), celdaRandom.getColumna()};
     }
 
-    public void ubicar(T ocupante, int fila, int columna) {
+    public void ubicar(T ocupante, int fila, int columna) throws CeldaOcupadaException {
+        getCelda(fila, columna).ocupar(ocupante);
+    }
+
+    public void ubicarEnCentro(T ocupante) throws CeldaOcupadaException {
+        getCeldaCentral().ocupar(ocupante);
+    }
+
+    public void forzarOcupacion(int fila, int columna, Object o) {
     }
 }

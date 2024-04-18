@@ -25,12 +25,17 @@ public class Personaje {
     }
 
     public void mover(int[] desplazamiento) {
-        int dx = ubicacion.x() + desplazamiento[1];
-        int dy = ubicacion.y() + desplazamiento[0];
-        this.ubicacion = new Punto(dy, dx);
+        this.ubicacion = new Punto(ubicacion.fila() + desplazamiento[0], ubicacion.columna() + desplazamiento[1]);
     }
 
     public void mover(int fila, int columna) {
         this.ubicacion = new Punto(fila, columna);
     }
+
+    public int getFila(){
+        return ubicacion.fila();
+    }
+    public int getColumna(){
+        return ubicacion.columna();
+        }
 }

@@ -1,5 +1,8 @@
 package org.example.modelo.tablero;
 
+import org.example.modelo.jugabilidad.CeldaDesocupadaException;
+import org.example.modelo.jugabilidad.CeldaOcupadaException;
+
 public class Celda<T> {
     private final Punto coordenadas;
     private T ocupante;
@@ -14,28 +17,28 @@ public class Celda<T> {
         this.ocupante = ocupante;
     }
 
-    public int getX() {
-        return coordenadas.x();
+    public int getFila() {
+        return coordenadas.fila();
     }
 
-    public int getY() {
-        return coordenadas.y();
+    public int getColumna() {
+        return coordenadas.columna();
     }
 
-    public T getOcupante() throws CeldaInvalidaException {
-        if (estaVacia()) throw new CeldaInvalidaException("La celda no está ocupada");
+    public T getOcupante() throws CeldaDesocupadaException {
+        if (estaVacia()) throw new CeldaDesocupadaException();
         return ocupante;
     }
 
-    public T vaciar() throws CeldaInvalidaException {
-        if (estaVacia()) throw new CeldaInvalidaException("La celda no está ocupada");
+    public T vaciar() throws CeldaDesocupadaException {
+        if (estaVacia()) throw new CeldaDesocupadaException();
         var anteriorOcupante = ocupante;
         this.ocupante = null;
         return anteriorOcupante;
     }
 
-    public void ocupar(T ocupante) throws CeldaInvalidaException {
-        if (!estaVacia()) throw new CeldaInvalidaException("La celda ya está ocupada");
+    public void ocupar(T ocupante) throws CeldaOcupadaException {
+        if (!estaVacia()) throw new CeldaOcupadaException();
         this.ocupante = ocupante;
     }
 
