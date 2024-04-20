@@ -15,8 +15,8 @@ public class Juego {
     private Nivel nivel;
     private boolean enJuego;
 
-    public Juego(int filas, int columnas, String nombreJugador, int tpsSeguros, int dificultad) throws Exception {
-        this.jugador = new Jugador(nombreJugador, tpsSeguros);
+    public Juego(int dificultad) throws Exception {
+        this.jugador = new Jugador((int) Math.ceil((((Math.pow(dificultad, 2) * 10) / Math.exp(dificultad)))));
         validarDificultad(dificultad);
         this.dificultad = dificultad;
         this.nivel = new Nivel(1, jugador, dificultad);
