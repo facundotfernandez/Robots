@@ -1,6 +1,8 @@
 package org.example.modelo.jugabilidad;
 
-import org.example.modelo.tablero.Punto;
+import org.example.modelo.tablero.CeldaDesocupadaException;
+import org.example.modelo.tablero.CeldaOcupadaException;
+import org.example.modelo.utilidades.Punto;
 import org.example.modelo.tablero.Tablero;
 import org.example.modelo.unidades.Jugador;
 import org.example.modelo.unidades.Personaje;
@@ -11,7 +13,7 @@ import java.util.LinkedList;
 import java.util.Random;
 
 import static org.example.modelo.utilidades.Constantes.INCENDIO;
-import static org.example.modelo.utilidades.Constantes.TIPOS_ROBOTS;
+import static org.example.modelo.utilidades.Constantes.TIPOS_DE_ROBOTS;
 
 public class Nivel {
     private final int id;
@@ -38,7 +40,7 @@ public class Nivel {
     public LinkedList<Robot> crearRobots(int cantidad) {
         LinkedList<Robot> listado = new LinkedList<>();
         for (int i = 0; i < cantidad; i++) {
-            listado.add(new Robot(new Random().nextInt(TIPOS_ROBOTS) + 1));
+            listado.add(new Robot(new Random().nextInt(TIPOS_DE_ROBOTS) + 1));
         }
         return listado;
     }

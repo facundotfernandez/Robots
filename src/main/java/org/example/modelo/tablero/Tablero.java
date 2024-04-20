@@ -1,8 +1,5 @@
 package org.example.modelo.tablero;
 
-import org.example.modelo.jugabilidad.CeldaDesocupadaException;
-import org.example.modelo.jugabilidad.CeldaOcupadaException;
-
 import java.util.LinkedList;
 import java.util.Random;
 

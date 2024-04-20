@@ -1,7 +1,6 @@
 package org.example.modelo.tablero;
 
-import org.example.modelo.jugabilidad.CeldaDesocupadaException;
-import org.example.modelo.jugabilidad.CeldaOcupadaException;
+import org.example.modelo.utilidades.Punto;
 
 public class Celda<T> {
     private final Punto coordenadas;

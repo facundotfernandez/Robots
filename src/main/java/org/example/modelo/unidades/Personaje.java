@@ -1,6 +1,6 @@
 package org.example.modelo.unidades;
 
-import org.example.modelo.tablero.Punto;
+import org.example.modelo.utilidades.Punto;
 
 public class Personaje {
     protected int puntaje;

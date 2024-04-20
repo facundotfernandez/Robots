@@ -1,5 +1,7 @@
 package org.example.modelo.jugabilidad;
 
+import org.example.modelo.tablero.CeldaDesocupadaException;
+import org.example.modelo.tablero.CeldaOcupadaException;
 import org.example.modelo.unidades.Jugador;
 
 import java.util.Random;

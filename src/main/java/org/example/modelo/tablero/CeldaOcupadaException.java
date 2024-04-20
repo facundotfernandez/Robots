@@ -1,4 +1,4 @@
-package org.example.modelo.jugabilidad;
+package org.example.modelo.tablero;
 
 public class CeldaOcupadaException extends Exception {
 
