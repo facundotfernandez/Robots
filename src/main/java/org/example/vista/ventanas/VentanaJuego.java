@@ -7,8 +7,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.example.modelo.tablero.CeldaDesocupadaException;
 import org.example.modelo.tablero.Tablero;
+import org.example.modelo.unidades.Jugador;
 import org.example.modelo.unidades.Personaje;
+import org.example.modelo.unidades.Robot;
 import org.example.modelo.utilidades.Direccion;
 import org.example.vista.componentes.Boton;
 import org.example.vista.contenedores.BarraDeTitulo;
@@ -27,9 +30,7 @@ public class VentanaJuego extends VBox {
     private final int filasTablero;
     private final int columnasTablero;
     Stage escenario;
-    private Encabezado header;
     private GridPane seccionPrincipal;
-    private BloqueDeBotones footer;
     private int orientacionCursor;
 
     public VentanaJuego(Stage escenario, String titulo, int nivel, int puntaje, Tablero<Personaje> tablero) {
@@ -37,27 +38,47 @@ public class VentanaJuego extends VBox {
         this.tablero = tablero;
         this.escenario = escenario;
         escenario.setTitle(titulo);
-        inicializarComponentes(nivel, puntaje);
         this.filasTablero = tablero.getFilas();
         this.columnasTablero = tablero.getColumnas();
+        inicializarComponentes(nivel, puntaje);
     }
 
     private void inicializarComponentes(int nivel, int puntaje) {
         Encabezado header = new Encabezado(titulo, new String[]{"Nivel: " + nivel, "Puntaje: " + puntaje});
 
         GridPane seccionPrincipal = new GridPane();
-        for (int row = 0; row < tablero.getFilas(); row++) {
-            for (int col = 0; col < tablero.getColumnas(); col++) {
+        for (int fila = 0; fila < filasTablero; fila++) {
+            for (int col = 0; col < columnasTablero; col++) {
                 ImageView fondoCelda = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/tablero/fondo_vacio.bmp"))));
                 fondoCelda.setFitWidth(DIMENSION_CELDA);
                 fondoCelda.setFitHeight(DIMENSION_CELDA);
-                seccionPrincipal.add(fondoCelda, col, row);
+                seccionPrincipal.add(fondoCelda, col, fila);
+
+                try {
+                    Personaje ocupante = tablero.getOcupante(fila, col);
+                    String tipoOcupante = "";
+                    try {
+                        Jugador jugador = (Jugador) ocupante;
+                        tipoOcupante = "jugador";
+                    } catch (ClassCastException _) {
+                        try {
+                            Robot robot = (Robot) ocupante;
+                            tipoOcupante = "robot-" + robot.getMultiplicador();
+                        } catch (ClassCastException _) {
+                        }
+                    }
+                    ImageView personaje = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/tablero/" + tipoOcupante + ".png"))));
+                    personaje.setFitWidth(DIMENSION_CELDA);
+                    personaje.setFitHeight(DIMENSION_CELDA);
+                    seccionPrincipal.add(personaje, col, fila);
+                } catch (CeldaDesocupadaException _) {
+                }
             }
         }
 
         BloqueDeBotones footer = crearBotonesAcciones();
 
-        seccionPrincipal.setPrefHeight(tablero.getFilas() * DIMENSION_CELDA);
+        seccionPrincipal.setPrefHeight(filasTablero * DIMENSION_CELDA);
         seccionPrincipal.setAlignment(Pos.CENTER);
         seccionPrincipal.setStyle("-fx-background-color: #7D9598");
         setSpacing(0);
@@ -65,21 +86,19 @@ public class VentanaJuego extends VBox {
         seccionPrincipal.setOnMouseMoved(event -> {
             double mouseX = event.getX();
             double mouseY = event.getY();
-            int row = (int) (mouseY / DIMENSION_CELDA);
+            int fila = (int) (mouseY / DIMENSION_CELDA);
             int col = (int) (mouseX / DIMENSION_CELDA);
             int corrimientoX = (int) ((getWidth() - columnasTablero * DIMENSION_CELDA) / (2 * DIMENSION_CELDA));
 
             int centerRow = filasTablero / 2;
             int centerCol = (columnasTablero / 2) + corrimientoX;
 
-            int orientacion = Direccion.getDireccion(Direccion.calcularDistancia(row, col, centerRow, centerCol));
+            int orientacion = Direccion.getDireccion(Direccion.calcularDistancia(fila, col, centerRow, centerCol));
             if (orientacion != orientacionCursor) setCursor(orientacion);
             this.orientacionCursor = orientacion;
         });
 
-        this.header = header;
         this.seccionPrincipal = seccionPrincipal;
-        this.footer = footer;
         this.getChildren().addAll(new BarraDeTitulo(escenario), header, seccionPrincipal, footer);
     }
 

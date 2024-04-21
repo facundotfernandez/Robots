@@ -24,4 +24,8 @@ public class Jugador extends Personaje {
     public void addTPSeguro() {
         this.tpSeguros += 1;
     }
+
+    public int getTpSeguros() {
+        return tpSeguros;
+    }
 }

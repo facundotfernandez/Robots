@@ -1,6 +1,5 @@
 package org.example.vista.componentes;
 
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;

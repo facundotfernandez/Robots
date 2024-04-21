@@ -40,7 +40,7 @@ public class Nivel {
     public LinkedList<Robot> crearRobots(int cantidad) {
         LinkedList<Robot> listado = new LinkedList<>();
         for (int i = 0; i < cantidad; i++) {
-            listado.add(new Robot(new Random().nextInt(TIPOS_DE_ROBOTS) + 1));
+            listado.add(new Robot(new Random().nextInt(TIPOS_DE_ROBOTS - 1) + 1));
         }
         return listado;
     }
