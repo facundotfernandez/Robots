@@ -12,7 +12,8 @@ import org.example.modelo.utilidades.Punto;
 import java.util.LinkedList;
 import java.util.Random;
 
-import static org.example.modelo.utilidades.Constantes.*;
+import static org.example.modelo.utilidades.Constantes.INCENDIO;
+import static org.example.modelo.utilidades.Constantes.TIPOS_DE_ROBOTS;
 
 public class Nivel {
     private final int id;
@@ -20,11 +21,11 @@ public class Nivel {
     private final LinkedList<Robot> robots;
     private final Tablero<Personaje> tablero;
 
-    public Nivel(int id, Jugador jugador, int dificultad) {
+    public Nivel(int id, Jugador jugador, int dificultad, int filas, int columnas) {
         this.id = id;
         var cantRobots = id * dificultad;
         this.robots = crearRobots(cantRobots);
-        this.tablero = new Tablero<>(DIMENSION_FILAS, DIMENSION_COLUMNAS);
+        this.tablero = new Tablero<>(filas, columnas);
         this.jugador = jugador;
     }
 

@@ -11,16 +11,14 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import org.example.vista.componentes.Boton;
 import org.example.vista.componentes.Subtitulo;
+import org.example.vista.componentes.Titulo;
 
 public class Encabezado extends HBox {
     private final VBox containerTitulo;
     private final Label titulo;
     private final HBox containerSubtitulos;
-    private final Stage escenario;
 
-    public Encabezado(Stage escenario, String titulo) {
-        this.escenario = escenario;
-
+    public Encabezado(String titulo) {
         this.containerTitulo = new VBox();
         this.titulo = new Label(titulo);
         getChildren().add(this.titulo);
@@ -29,14 +27,12 @@ public class Encabezado extends HBox {
         configurarEstilos();
     }
 
-    public Encabezado(Stage escenario, String titulo, String[] subtitulos) {
-        this.escenario = escenario;
-
+    public Encabezado(String titulo, String[] subtitulos) {
         this.containerTitulo = new VBox();
         HBox.setHgrow(containerTitulo, Priority.ALWAYS);
         getChildren().add(containerTitulo);
 
-        this.titulo = new Label(titulo);
+        this.titulo = new Titulo(titulo);
         containerTitulo.getChildren().add(this.titulo);
 
         this.containerSubtitulos = new HBox();
@@ -46,11 +42,7 @@ public class Encabezado extends HBox {
             containerSubtitulos.getChildren().add(new Subtitulo(subtitulo));
         }
 
-        Boton closeButton = new Boton("X");
-        closeButton.setOnAction(e -> escenario.close());
-        closeButton.setPrefHeight(50);
-        closeButton.setPrefWidth(50);
-        getChildren().add(closeButton);
+
 
         configurarEstilos();
     }
@@ -58,15 +50,9 @@ public class Encabezado extends HBox {
     private void configurarEstilos() {
         Font.loadFont(getClass().getResourceAsStream("Canterell-Regular.ttf"), 10);
 
-        titulo.setFont(Font.font("Canterell", FontWeight.BOLD, 18));
-        titulo.setStyle("-fx-text-fill: #343A3B;");
-        titulo.setPadding(new Insets(0, 10, 0, 0));
-
         containerTitulo.setAlignment(Pos.CENTER);
-        titulo.setAlignment(Pos.CENTER);
         containerSubtitulos.setAlignment(Pos.CENTER);
         setAlignment(Pos.CENTER);
-
 
         setSpacing(5);
         setPadding(new Insets(10));
