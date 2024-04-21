@@ -2,18 +2,17 @@ package org.example.modelo.jugabilidad;
 
 import org.example.modelo.tablero.CeldaDesocupadaException;
 import org.example.modelo.tablero.CeldaOcupadaException;
-import org.example.modelo.utilidades.Punto;
 import org.example.modelo.tablero.Tablero;
 import org.example.modelo.unidades.Jugador;
 import org.example.modelo.unidades.Personaje;
 import org.example.modelo.unidades.Robot;
 import org.example.modelo.utilidades.Direccion;
+import org.example.modelo.utilidades.Punto;
 
 import java.util.LinkedList;
 import java.util.Random;
 
-import static org.example.modelo.utilidades.Constantes.INCENDIO;
-import static org.example.modelo.utilidades.Constantes.TIPOS_DE_ROBOTS;
+import static org.example.modelo.utilidades.Constantes.*;
 
 public class Nivel {
     private final int id;
@@ -25,7 +24,7 @@ public class Nivel {
         this.id = id;
         var cantRobots = id * dificultad;
         this.robots = crearRobots(cantRobots);
-        this.tablero = new Tablero<>(cantRobots * 2, cantRobots * 2);
+        this.tablero = new Tablero<>(DIMENSION_FILAS, DIMENSION_COLUMNAS);
         this.jugador = jugador;
     }
 

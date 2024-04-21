@@ -15,7 +15,7 @@ public class Boton extends Button {
         Font.loadFont(getClass().getResourceAsStream("Canterell-Regular.ttf"), 10);
 
         setPrefHeight(64);
-        setStyle("-fx-background-radius: 0px; -fx-font-size: 16px; -fx-text-fill: #343A3B; -fx-border-color: #E9E9E9");
+        setStyle("-fx-background-color: #E9E9E9; -fx-background-radius: 0px; -fx-font-size: 16px; -fx-text-fill: #343A3B; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
         setFont(Font.font("Canterell", FontWeight.BOLD, 24));
         setOnMouseEntered(e -> setStyle("-fx-background-color: #D2D2D2; -fx-background-radius: 0px; -fx-font-size: 16px;"));
         setOnMouseExited(e -> setStyle("-fx-background-color: #E9E9E9; -fx-background-radius: 0px; -fx-font-size: 16px;"));

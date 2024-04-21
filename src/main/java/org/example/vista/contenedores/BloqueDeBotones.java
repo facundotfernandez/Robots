@@ -20,6 +20,7 @@ public class BloqueDeBotones extends HBox {
             boton.setMaxWidth(Double.MAX_VALUE);
         }
 
+        setPrefHeight(64);
         setStyle("-fx-background-color: #E9E9E9;");
     }
 

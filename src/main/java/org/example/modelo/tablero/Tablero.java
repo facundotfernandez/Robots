@@ -96,9 +96,9 @@ public class Tablero<T> {
             Celda<T> celdaRandom = getCeldaRandom();
             try {
                 celdaRandom.getOcupante();
+            } catch (CeldaDesocupadaException _) {
                 celdaRandom.ocupar(ocupante);
                 return new int[]{celdaRandom.getFila(), celdaRandom.getColumna()};
-            } catch (CeldaDesocupadaException _) {
             }
         }
     }

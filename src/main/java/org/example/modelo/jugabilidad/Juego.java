@@ -6,8 +6,7 @@ import org.example.modelo.unidades.Jugador;
 
 import java.util.Random;
 
-import static org.example.modelo.utilidades.Constantes.DIFICIL;
-import static org.example.modelo.utilidades.Constantes.FACIL;
+import static org.example.modelo.utilidades.Constantes.*;
 
 public class Juego {
     private final Jugador jugador;
@@ -48,7 +47,11 @@ public class Juego {
         return enJuego;
     }
 
-    private void jugarTurno(int[] direccion) throws CeldaDesocupadaException, CeldaOcupadaException, ColisionConJugadorException {
+    public Nivel getNivel() {
+        return nivel;
+    }
+
+    public void jugarTurno(int[] direccion) throws CeldaDesocupadaException, CeldaOcupadaException, ColisionConJugadorException {
         if (nivel.hayRobots()) {
             try {
                 nivel.jugarTurno(direccion);

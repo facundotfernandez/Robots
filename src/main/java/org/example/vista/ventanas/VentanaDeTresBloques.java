@@ -23,9 +23,6 @@ public class VentanaDeTresBloques extends VBox {
     public void configurarDistribucion() {
         VBox.setVgrow(mainSection, Priority.ALWAYS);
         setStyle("-fx-background-color: #DCDAD3");
-        /*header.setStyle("-fx-background-color: #00ff78");
-        mainSection.setStyle("-fx-background-color: #0033ff");
-        footer.setStyle("-fx-background-color: #ff0000");*/
     }
 
     public Pane getHeader() {
