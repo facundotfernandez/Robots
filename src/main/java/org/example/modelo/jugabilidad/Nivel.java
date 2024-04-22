@@ -1,6 +1,7 @@
 package org.example.modelo.jugabilidad;
 
 import org.example.modelo.tablero.CeldaDesocupadaException;
+import org.example.modelo.tablero.CeldaInvalidaException;
 import org.example.modelo.tablero.CeldaOcupadaException;
 import org.example.modelo.tablero.Tablero;
 import org.example.modelo.unidades.Jugador;
@@ -127,8 +128,11 @@ public class Nivel {
     }
 
     public void jugarTurno(int fila, int columna) throws CeldaDesocupadaException, ColisionConJugadorException {
-        ubicar(jugador, fila, columna);
-        moverRobots(jugador.getUbicacion());
+        try {
+            ubicar(jugador, fila, columna);
+            moverRobots(jugador.getUbicacion());
+        } catch (CeldaInvalidaException _) {
+        }
     }
 
     public void jugarTurno(int[] direccion) throws CeldaDesocupadaException, ColisionConJugadorException {
