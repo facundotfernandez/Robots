@@ -66,19 +66,18 @@ public class Juego {
     private void usarTP() throws CeldaDesocupadaException {
         var fila = new Random().nextInt(nivel.getFilas());
         var columna = new Random().nextInt(nivel.getColumnas());
-        try {
-            nivel.jugarTurno(fila, columna);
-            if (!nivel.hayRobots()) juegoGanado();
-        } catch (ColisionConJugadorException e) {
-            juegoPerdido();
-        }
+        usarTP(fila, columna);
     }
 
-    private void usarTP(int fila, int columna) throws CeldaDesocupadaException {
+    private void usarTPSeguro(int fila, int columna) throws CeldaDesocupadaException {
         try {
             jugador.usarTPseguro();
         } catch (IndexOutOfBoundsException _) {
         }
+        usarTP(fila, columna);
+    }
+
+    private void usarTP(int fila, int columna) throws CeldaDesocupadaException {
         try {
             nivel.jugarTurno(fila, columna);
             if (!nivel.hayRobots()) juegoGanado();
