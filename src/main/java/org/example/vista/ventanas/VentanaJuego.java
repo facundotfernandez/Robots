@@ -49,7 +49,7 @@ public class VentanaJuego extends VBox {
         GridPane seccionPrincipal = new GridPane();
         for (int fila = 0; fila < filasTablero; fila++) {
             for (int col = 0; col < columnasTablero; col++) {
-                ImageView fondoCelda = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/tablero/fondo_vacio.bmp"))));
+                ImageView fondoCelda = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/tablero/fondo_vacio.png"))));
                 fondoCelda.setFitWidth(DIMENSION_CELDA);
                 fondoCelda.setFitHeight(DIMENSION_CELDA);
                 seccionPrincipal.add(fondoCelda, col, fila);
