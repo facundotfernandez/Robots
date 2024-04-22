@@ -86,8 +86,12 @@ public class Tablero<T> {
     public void mover(int filaOrigen, int columnaOrigen, int[] direccion) throws CeldaInvalidaException, CeldaDesocupadaException, CeldaOcupadaException {
         Celda<T> origen = getCelda(filaOrigen, columnaOrigen);
         Celda<T> destino = getCelda(filaOrigen + direccion[0], columnaOrigen + direccion[1]);
-        estaDentro(origen);
-        estaDentro(destino);
+        destino.ocupar(origen.vaciar());
+    }
+
+    public void mover(int filaOrigen, int columnaOrigen, int filaDestino, int columnaDestino) throws CeldaInvalidaException, CeldaDesocupadaException, CeldaOcupadaException {
+        Celda<T> origen = getCelda(filaOrigen, columnaOrigen);
+        Celda<T> destino = getCelda(filaDestino, columnaDestino);
         destino.ocupar(origen.vaciar());
     }
 

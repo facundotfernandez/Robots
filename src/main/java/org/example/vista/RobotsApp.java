@@ -23,7 +23,6 @@ import static org.example.vista.utilidades.Constantes.ANCHO_VENTANA;
 
 public class RobotsApp extends Application {
 
-    static String titulo;
     private static Pane root;
     private static Stage escenario;
     private static Juego juego;

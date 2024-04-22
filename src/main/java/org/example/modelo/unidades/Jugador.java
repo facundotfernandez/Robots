@@ -12,11 +12,11 @@ public class Jugador extends Personaje {
         this.puntaje += puntos;
     }
 
-    private void tieneTPSeguros() {
+    private void tieneTPSeguros() throws IndexOutOfBoundsException{
         if (tpSeguros <= 0) throw new IndexOutOfBoundsException();
     }
 
-    public void usarTPseguro() {
+    public void usarTPseguro() throws IndexOutOfBoundsException{
         tieneTPSeguros();
         this.tpSeguros -= 1;
     }

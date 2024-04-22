@@ -58,8 +58,14 @@ public class Nivel {
         ocupante.mover(ubicacion[0], ubicacion[1]);
     }
 
-    public void ubicar(Personaje ocupante, int fila, int columna) throws CeldaOcupadaException {
-        tablero.ubicar(ocupante, fila, columna);
+    public void ubicar(Personaje ocupante, int fila, int columna) throws ColisionConJugadorException {
+        try {
+            tablero.mover(ocupante.getFila(), ocupante.getColumna(), fila, columna);
+        } catch (CeldaOcupadaException e) {
+            throw new ColisionConJugadorException();
+        } catch (CeldaDesocupadaException e) {
+            throw new RuntimeException(e);
+        }
         ocupante.mover(fila, columna);
     }
 
@@ -76,7 +82,7 @@ public class Nivel {
         return personaje.getClass() == Jugador.class;
     }
 
-    public void mover(Personaje personaje, int[] direccion) throws CeldaDesocupadaException, CeldaOcupadaException, ColisionConJugadorException {
+    public void mover(Personaje personaje, int[] direccion) throws CeldaDesocupadaException, ColisionConJugadorException {
         try {
             tablero.mover(personaje.getFila(), personaje.getColumna(), direccion);
         } catch (CeldaOcupadaException e) {
@@ -103,7 +109,7 @@ public class Nivel {
         return !robots.isEmpty();
     }
 
-    public void moverRobots(Punto ubicacion) throws CeldaDesocupadaException, CeldaOcupadaException, ColisionConJugadorException {
+    public void moverRobots(Punto ubicacion) throws CeldaDesocupadaException, ColisionConJugadorException {
         for (Robot robot : robots) {
             int[] direccion = Direccion.calcularDistancia(robot.getFila(), robot.getColumna(), ubicacion.fila(), ubicacion.columna());
             direccion[0] *= robot.getMultiplicador();
@@ -120,7 +126,12 @@ public class Nivel {
         }
     }
 
-    public void jugarTurno(int[] direccion) throws CeldaDesocupadaException, CeldaOcupadaException, ColisionConJugadorException {
+    public void jugarTurno(int fila, int columna) throws CeldaDesocupadaException, ColisionConJugadorException {
+        ubicar(jugador, fila, columna);
+        moverRobots(jugador.getUbicacion());
+    }
+
+    public void jugarTurno(int[] direccion) throws CeldaDesocupadaException, ColisionConJugadorException {
         mover(jugador, direccion);
         jugador.mover(direccion);
 

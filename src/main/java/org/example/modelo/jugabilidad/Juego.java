@@ -63,24 +63,27 @@ public class Juego {
         } else avanzarNivel();
     }
 
-    private void usarTP() throws CeldaOcupadaException, CeldaDesocupadaException, ColisionConJugadorException {
+    private void usarTP() throws CeldaDesocupadaException {
         var fila = new Random().nextInt(nivel.getFilas());
         var columna = new Random().nextInt(nivel.getColumnas());
-
         try {
-            nivel.mover(jugador, new int[]{fila, columna});
-            jugador.mover(fila, columna);
-            nivel.moverRobots(jugador.getUbicacion());
+            nivel.jugarTurno(fila, columna);
             if (!nivel.hayRobots()) juegoGanado();
         } catch (ColisionConJugadorException e) {
             juegoPerdido();
         }
     }
 
-    private void usarTPSeguro(int[] direccion) throws CeldaOcupadaException, CeldaDesocupadaException, ColisionConJugadorException {
-        jugador.usarTPseguro();
-        nivel.ubicar(jugador, direccion[0], direccion[1]);
-        nivel.moverRobots(jugador.getUbicacion());
-        if (!nivel.hayRobots()) juegoGanado();
+    private void usarTP(int fila, int columna) throws CeldaDesocupadaException {
+        try {
+            jugador.usarTPseguro();
+        } catch (IndexOutOfBoundsException _) {
+        }
+        try {
+            nivel.jugarTurno(fila, columna);
+            if (!nivel.hayRobots()) juegoGanado();
+        } catch (ColisionConJugadorException e) {
+            juegoPerdido();
+        }
     }
 }
