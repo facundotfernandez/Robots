@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.example.modelo.jugabilidad.Nivel;
 import org.example.modelo.tablero.CeldaDesocupadaException;
 import org.example.modelo.tablero.Tablero;
 import org.example.modelo.unidades.Jugador;
@@ -21,11 +22,10 @@ import org.example.vista.contenedores.Encabezado;
 import java.util.LinkedList;
 import java.util.Objects;
 
+import static org.example.vista.utilidades.Constantes.*;
+
 public class VentanaJuego extends VBox {
     private static final int DIMENSION_CELDA = 32;
-    private static final String[] ETIQUETAS_BOTONES = {"Teleportación Aleatoria", "Teleportación segura", "Esperar"};
-    private static final String[] SUBTITULOS_BOTONES = {"", "Disponibles: 4", ""};
-    private final String titulo;
     private final Tablero<Personaje> tablero;
     private final int filasTablero;
     private final int columnasTablero;
@@ -33,27 +33,29 @@ public class VentanaJuego extends VBox {
     private GridPane seccionPrincipal;
     private int orientacionCursor;
 
-    public VentanaJuego(Stage escenario, String titulo, int nivel, int puntaje, Tablero<Personaje> tablero) {
-        this.titulo = titulo;
-        this.tablero = tablero;
+    public VentanaJuego(Stage escenario, Nivel nivel) {
+        this.tablero = nivel.getTablero();
         this.escenario = escenario;
-        escenario.setTitle(titulo);
+        escenario.setTitle(TITULO);
         this.filasTablero = tablero.getFilas();
         this.columnasTablero = tablero.getColumnas();
-        inicializarComponentes(nivel, puntaje);
+        inicializarComponentes(nivel.getId(), nivel.getPuntaje(), nivel.getTPSeguros());
     }
 
-    private void inicializarComponentes(int nivel, int puntaje) {
-        Encabezado header = new Encabezado(titulo, new String[]{"Nivel: " + nivel, "Puntaje: " + puntaje});
+    private void agregarImagenCelda(GridPane contenedor, String ruta, int x, int y) {
+        ImageView imagen = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream(ruta))));
+        imagen.setFitHeight(DIMENSION_CELDA);
+        imagen.setFitWidth(DIMENSION_CELDA);
+        contenedor.add(imagen, x, y);
+    }
+
+    private void inicializarComponentes(int nivel, int puntaje, int tpSeguros) {
+        Encabezado header = new Encabezado(new String[]{ETIQUETAS_ESTADO_JUEGO[0] + " " + nivel, ETIQUETAS_ESTADO_JUEGO[1] + " " + puntaje});
 
         GridPane seccionPrincipal = new GridPane();
         for (int fila = 0; fila < filasTablero; fila++) {
             for (int col = 0; col < columnasTablero; col++) {
-                ImageView fondoCelda = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/tablero/fondo_vacio.png"))));
-                fondoCelda.setFitWidth(DIMENSION_CELDA);
-                fondoCelda.setFitHeight(DIMENSION_CELDA);
-                seccionPrincipal.add(fondoCelda, col, fila);
-
+                agregarImagenCelda(seccionPrincipal, "/tablero/fondo_vacio.png", col, fila);
                 try {
                     Personaje ocupante = tablero.getOcupante(fila, col);
                     String tipoOcupante = "";
@@ -67,16 +69,13 @@ public class VentanaJuego extends VBox {
                         } catch (ClassCastException _) {
                         }
                     }
-                    ImageView personaje = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/tablero/" + tipoOcupante + ".png"))));
-                    personaje.setFitWidth(DIMENSION_CELDA);
-                    personaje.setFitHeight(DIMENSION_CELDA);
-                    seccionPrincipal.add(personaje, col, fila);
+                    agregarImagenCelda(seccionPrincipal, "/tablero/" + tipoOcupante + ".png", col, fila);
                 } catch (CeldaDesocupadaException _) {
                 }
             }
         }
 
-        BloqueDeBotones footer = crearBotonesAcciones();
+        BloqueDeBotones footer = crearBotonesAcciones(tpSeguros);
 
         seccionPrincipal.setPrefHeight(filasTablero * DIMENSION_CELDA);
         seccionPrincipal.setAlignment(Pos.CENTER);
@@ -102,10 +101,10 @@ public class VentanaJuego extends VBox {
         this.getChildren().addAll(new BarraDeTitulo(escenario), header, seccionPrincipal, footer);
     }
 
-    private BloqueDeBotones crearBotonesAcciones() {
+    private BloqueDeBotones crearBotonesAcciones(int tpSeguros) {
         LinkedList<Boton> botones = new LinkedList<>();
-        for (int i = 0; i < ETIQUETAS_BOTONES.length; i++) {
-            Boton boton = new Boton(ETIQUETAS_BOTONES[i], SUBTITULOS_BOTONES[i]);
+        for (int i = 0; i < ETIQUETAS_BOTONES_JUEGO.length; i++) {
+            Boton boton = new Boton(ETIQUETAS_BOTONES_JUEGO[i] + ((i == 1) ? (" " + tpSeguros) : ""));
             botones.add(boton);
         }
 

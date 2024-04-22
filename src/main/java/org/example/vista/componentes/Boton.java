@@ -11,11 +11,6 @@ public class Boton extends Button {
         configurarEstilos();
     }
 
-    public Boton(String etiqueta, String subtitulo) {
-        super(etiqueta + "\n" + subtitulo);
-        configurarEstilos();
-    }
-
     private void configurarEstilos() {
         Font.loadFont(getClass().getResourceAsStream("Canterell-Regular.ttf"), 10);
 

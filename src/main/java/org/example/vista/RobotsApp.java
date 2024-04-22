@@ -12,11 +12,13 @@ import org.example.modelo.jugabilidad.ColisionConJugadorException;
 import org.example.modelo.jugabilidad.Juego;
 import org.example.modelo.tablero.CeldaDesocupadaException;
 import org.example.modelo.tablero.CeldaOcupadaException;
-import org.example.vista.componentes.Boton;
 import org.example.vista.ventanas.VentanaJuego;
 import org.example.vista.ventanas.VentanaMenuPrincipal;
 
 import java.util.Objects;
+
+import static org.example.vista.utilidades.Constantes.ALTO_VENTANA;
+import static org.example.vista.utilidades.Constantes.ANCHO_VENTANA;
 
 
 public class RobotsApp extends Application {
@@ -37,12 +39,12 @@ public class RobotsApp extends Application {
 
     public static void iniciarJuego(int dificultad, int filas, int columnas) throws Exception {
         juego = new Juego(dificultad, filas, columnas);
-        root = new VentanaJuego(escenario, titulo, 1, 0, juego.getNivel().getTablero());
-        escenario.setScene(new Scene(root, 1440, 818));
+        root = new VentanaJuego(escenario, juego.getNivel());
+        escenario.setScene(new Scene(root, ANCHO_VENTANA, ALTO_VENTANA));
 
         setCursor();
         setVentanaMovible();
-        setVentanaCerrable();
+        //setVentanaCerrable();
     }
 
     private static void setVentanaMovible() {
@@ -65,11 +67,9 @@ public class RobotsApp extends Application {
     @Override
     public void start(Stage escenario) {
 
-        titulo = "Robots";
-        Boton botonComenzarJuego = new Boton("COMENZAR\nJUEGO");
-        root = new VentanaMenuPrincipal(escenario, titulo, botonComenzarJuego);
+        root = new VentanaMenuPrincipal(escenario);
         RobotsApp.escenario = escenario;
-        escenario.setScene(new Scene(root, 1440, 818));
+        escenario.setScene(new Scene(root, ANCHO_VENTANA, ALTO_VENTANA));
         configurarEstilos();
 
         escenario.show();
@@ -79,7 +79,7 @@ public class RobotsApp extends Application {
         escenario.setResizable(false);
         escenario.initStyle(StageStyle.UNDECORATED);
 
-        setVentanaCerrable();
+        //setVentanaCerrable();
         setVentanaMovible();
         setCursor();
     }

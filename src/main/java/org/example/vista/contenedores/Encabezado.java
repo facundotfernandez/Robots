@@ -7,33 +7,28 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
-import org.example.vista.componentes.Boton;
 import org.example.vista.componentes.Subtitulo;
 import org.example.vista.componentes.Titulo;
 
+import static org.example.vista.utilidades.Constantes.TITULO;
+
 public class Encabezado extends HBox {
     private final VBox containerTitulo;
-    private final Label titulo;
     private final HBox containerSubtitulos;
 
-    public Encabezado(String titulo) {
+    public Encabezado() {
         this.containerTitulo = new VBox();
-        this.titulo = new Label(titulo);
-        getChildren().add(this.titulo);
+        containerTitulo.getChildren().add(new Label(TITULO));
 
         this.containerSubtitulos = new HBox();
         configurarEstilos();
     }
 
-    public Encabezado(String titulo, String[] subtitulos) {
+    public Encabezado(String[] subtitulos) {
         this.containerTitulo = new VBox();
-        HBox.setHgrow(containerTitulo, Priority.ALWAYS);
         getChildren().add(containerTitulo);
 
-        this.titulo = new Titulo(titulo);
-        containerTitulo.getChildren().add(this.titulo);
+        containerTitulo.getChildren().add(new Titulo(TITULO));
 
         this.containerSubtitulos = new HBox();
         containerTitulo.getChildren().add(containerSubtitulos);
@@ -41,15 +36,13 @@ public class Encabezado extends HBox {
         for (String subtitulo : subtitulos) {
             containerSubtitulos.getChildren().add(new Subtitulo(subtitulo));
         }
-
-
-
         configurarEstilos();
     }
 
     private void configurarEstilos() {
         Font.loadFont(getClass().getResourceAsStream("Canterell-Regular.ttf"), 10);
 
+        HBox.setHgrow(containerTitulo, Priority.ALWAYS);
         containerTitulo.setAlignment(Pos.CENTER);
         containerSubtitulos.setAlignment(Pos.CENTER);
         setAlignment(Pos.CENTER);

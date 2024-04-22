@@ -49,6 +49,10 @@ public class Nivel {
         return tablero;
     }
 
+    public int getPuntaje() {
+        return jugador.getPuntaje();
+    }
+
     public void ubicar(Personaje ocupante) throws CeldaOcupadaException {
         var ubicacion = tablero.ubicar(ocupante);
         ocupante.mover(ubicacion[0], ubicacion[1]);
@@ -129,5 +133,9 @@ public class Nivel {
 
     public int getColumnas() {
         return tablero.getColumnas();
+    }
+
+    public int getTPSeguros() {
+        return jugador.getTpSeguros();
     }
 }
