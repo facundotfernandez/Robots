@@ -16,6 +16,10 @@ public class Robot extends Personaje {
         this.multiplicador = multiplicador;
     }
 
+    /**
+     *
+     * @return multiplicador
+     */
     public int getMultiplicador() {
         return multiplicador;
     }
