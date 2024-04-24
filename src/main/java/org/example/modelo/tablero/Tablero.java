@@ -15,7 +15,6 @@ public class Tablero<T> {
     }
 
     /**
-     *
      * @param filas
      * @param columnas
      * @return grilla de lista enlazada de listas enlazadas
@@ -32,7 +31,6 @@ public class Tablero<T> {
     }
 
     /**
-     *
      * @return filas del Tablero
      */
     public int getFilas() {
@@ -40,7 +38,6 @@ public class Tablero<T> {
     }
 
     /**
-     *
      * @return columnas del Tablero
      */
     public int getColumnas() {
@@ -48,7 +45,6 @@ public class Tablero<T> {
     }
 
     /**
-     *
      * @param fila
      * @param columna
      * @return celda en la localizacion fila-columna
@@ -60,7 +56,6 @@ public class Tablero<T> {
     }
 
     /**
-     *
      * @return celda central
      */
     private Celda<T> getCeldaCentral() {
@@ -76,6 +71,7 @@ public class Tablero<T> {
 
     /**
      * ocupa la celda central
+     *
      * @param ocupante
      * @throws CeldaInvalidaException
      * @throws CeldaOcupadaException
@@ -86,6 +82,7 @@ public class Tablero<T> {
 
     /**
      * ocupa una celda aleaoria
+     *
      * @param ocupante
      * @throws CeldaInvalidaException
      * @throws CeldaOcupadaException
@@ -100,6 +97,7 @@ public class Tablero<T> {
 
     /**
      * vrifica si una ubicacion fila-columna esta dentro del tablero
+     *
      * @param fila
      * @param columna
      * @throws CeldaInvalidaException
@@ -111,6 +109,7 @@ public class Tablero<T> {
 
     /**
      * vrifica si una celda esta dentro del tablero
+     *
      * @param celda
      * @throws CeldaInvalidaException
      */
@@ -120,7 +119,6 @@ public class Tablero<T> {
     }
 
     /**
-     *
      * @param celda
      * @return lo que se encunetre en una celda específica
      * @throws CeldaInvalidaException
@@ -132,7 +130,6 @@ public class Tablero<T> {
     }
 
     /**
-     *
      * @param fila
      * @param columna
      * @return lo que se encuentre en una fila-columna específica
@@ -145,7 +142,6 @@ public class Tablero<T> {
     }
 
     /**
-     *
      * @param fila
      * @param columna
      * @return si la ubicacion en fila-columna está vacia
@@ -158,6 +154,7 @@ public class Tablero<T> {
 
     /**
      * mueve a la entidad en una fila-columna origen en una direccion determinada, si es que es la hay
+     *
      * @param filaOrigen
      * @param columnaOrigen
      * @param direccion
@@ -173,6 +170,7 @@ public class Tablero<T> {
 
     /**
      * mueve a la entidad en una fila-columna origen en una fila-columna destino, si es que es la hay
+     *
      * @param filaOrigen
      * @param columnaOrigen
      * @param filaDestino
@@ -188,7 +186,6 @@ public class Tablero<T> {
     }
 
     /**
-     *
      * @param ocupante
      * @return
      * @throws CeldaOcupadaException
@@ -211,6 +208,7 @@ public class Tablero<T> {
 
     /**
      * ubica en el centro del tablero al ocupante
+     *
      * @param ocupante
      * @throws CeldaOcupadaException
      */
@@ -220,10 +218,17 @@ public class Tablero<T> {
 
     /**
      * fuerza la ocupacion de una fila-columna
+     *
      * @param fila
      * @param columna
-     * @param o
+     * @param ocupante
      */
-    public void forzarOcupacion(int fila, int columna, Object o) {
+    public void forzarOcupacion(int fila, int columna, T ocupante) throws CeldaOcupadaException {
+        Celda<T> celda = getCelda(fila, columna);
+        try {
+            celda.vaciar();
+        } catch (CeldaDesocupadaException _) {
+        }
+        celda.ocupar(ocupante);
     }
 }

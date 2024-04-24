@@ -4,6 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -14,6 +15,7 @@ import org.example.modelo.unidades.Jugador;
 import org.example.modelo.unidades.Personaje;
 import org.example.modelo.unidades.Robot;
 import org.example.modelo.utilidades.Direccion;
+import org.example.vista.RobotsApp;
 import org.example.vista.componentes.Boton;
 import org.example.vista.contenedores.BarraDeTitulo;
 import org.example.vista.contenedores.BloqueDeBotones;
@@ -27,6 +29,7 @@ import static org.example.vista.utilidades.Constantes.*;
 public class VentanaJuego extends VBox {
     private static final int DIMENSION_CELDA = 32;
     private final Tablero<Personaje> tablero;
+    private final Jugador jugador;
     private final int filasTablero;
     private final int columnasTablero;
     Stage escenario;
@@ -39,6 +42,7 @@ public class VentanaJuego extends VBox {
         escenario.setTitle(TITULO);
         this.filasTablero = tablero.getFilas();
         this.columnasTablero = tablero.getColumnas();
+        this.jugador = nivel.getJugador();
         inicializarComponentes(nivel.getId(), nivel.getPuntaje(), nivel.getTPSeguros());
     }
 
@@ -89,16 +93,54 @@ public class VentanaJuego extends VBox {
             int col = (int) (mouseX / DIMENSION_CELDA);
             int corrimientoX = (int) ((getWidth() - columnasTablero * DIMENSION_CELDA) / (2 * DIMENSION_CELDA));
 
-            int centerRow = filasTablero / 2;
-            int centerCol = (columnasTablero / 2) + corrimientoX;
+            int filaCentro = jugador.getFila();
+            int centerCol = jugador.getColumna() + corrimientoX;
 
-            int orientacion = Direccion.getDireccion(Direccion.calcularDistancia(fila, col, centerRow, centerCol));
-            if (orientacion != orientacionCursor) setCursor(orientacion);
-            this.orientacionCursor = orientacion;
+            int orientacion = Direccion.getDireccion(Direccion.calcularDistancia(filaCentro, centerCol, fila, col));
+            if (orientacion != orientacionCursor) {
+                setCursor(orientacion);
+                this.orientacionCursor = orientacion;
+            }
         });
 
         this.seccionPrincipal = seccionPrincipal;
         this.getChildren().addAll(new BarraDeTitulo(escenario), header, seccionPrincipal, footer);
+
+        configurarControladores();
+    }
+
+    private void configurarControladores() {
+        configurarControladorJugarTurno();
+    }
+
+    private void configurarControladorJugarTurno() {
+        seccionPrincipal.setOnMouseClicked(event -> {
+            double mouseX = event.getX();
+            double mouseY = event.getY();
+            int fila = (int) (mouseY / DIMENSION_CELDA);
+            int col = (int) (mouseX / DIMENSION_CELDA);
+            int corrimientoX = (int) ((getWidth() - columnasTablero * DIMENSION_CELDA) / (2 * DIMENSION_CELDA));
+
+            int filaCentro = jugador.getFila();
+            int centerCol = jugador.getColumna() + corrimientoX;
+
+            try {
+                RobotsApp.jugarTurno(Direccion.calcularDistancia(filaCentro, centerCol, fila, col));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        setOnKeyReleased(event -> {
+            KeyCode tecla = event.getCode();
+            if (CONTROLES.containsKey(tecla)) {
+                try {
+                    RobotsApp.jugarTurno(CONTROLES.get(tecla).getDireccion());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 
     private BloqueDeBotones crearBotonesAcciones(int tpSeguros) {

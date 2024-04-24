@@ -3,13 +3,14 @@ package org.example.modelo.unidades;
 public class Jugador extends Personaje {
     private int tpSeguros;
 
-    public Jugador(int tpSeguros) {
-        super(0);
+    public Jugador(int tpSeguros, int fila, int columna) {
+        super(0, fila, columna);
         this.tpSeguros = tpSeguros;
     }
 
     /**
      * modifica los puntos a los acuales del personaje
+     *
      * @param puntos
      */
     public void addPuntos(int puntos) {
@@ -18,17 +19,19 @@ public class Jugador extends Personaje {
 
     /**
      * verifica si tiene tps seguros
+     *
      * @throws IndexOutOfBoundsException
      */
-    private void tieneTPSeguros() throws IndexOutOfBoundsException{
+    private void tieneTPSeguros() throws IndexOutOfBoundsException {
         if (tpSeguros <= 0) throw new IndexOutOfBoundsException();
     }
 
     /**
      * si tiene, resta uno a la cantidad de tps seguros
+     *
      * @throws IndexOutOfBoundsException
      */
-    public void usarTPseguro() throws IndexOutOfBoundsException{
+    public void usarTPseguro() throws IndexOutOfBoundsException {
         tieneTPSeguros();
         this.tpSeguros -= 1;
     }
@@ -41,7 +44,6 @@ public class Jugador extends Personaje {
     }
 
     /**
-     *
      * @return tps seguros
      */
     public int getTpSeguros() {

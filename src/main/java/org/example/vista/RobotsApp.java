@@ -8,10 +8,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.example.modelo.jugabilidad.ColisionConJugadorException;
 import org.example.modelo.jugabilidad.Juego;
-import org.example.modelo.tablero.CeldaDesocupadaException;
-import org.example.modelo.tablero.CeldaOcupadaException;
 import org.example.vista.ventanas.VentanaJuego;
 import org.example.vista.ventanas.VentanaMenuPrincipal;
 
@@ -63,6 +60,12 @@ public class RobotsApp extends Application {
         });
     }
 
+    public static void jugarTurno(int[] direccion) throws Exception {
+        juego.jugarTurno(direccion);
+        root = new VentanaJuego(escenario, juego.getNivel());
+        escenario.setScene(new Scene(root, ANCHO_VENTANA, ALTO_VENTANA));
+    }
+
     @Override
     public void start(Stage escenario) {
 
@@ -81,10 +84,6 @@ public class RobotsApp extends Application {
         //setVentanaCerrable();
         setVentanaMovible();
         setCursor();
-    }
-
-    private void jugarTurno(int[] direccion) throws CeldaDesocupadaException, CeldaOcupadaException, ColisionConJugadorException {
-        juego.jugarTurno(direccion);
     }
 
 }

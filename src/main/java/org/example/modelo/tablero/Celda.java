@@ -30,7 +30,8 @@ public class Celda<T> {
     }
 
     public T vaciar() throws CeldaDesocupadaException {
-        if (estaVacia()) throw new CeldaDesocupadaException();
+        if (estaVacia())
+            throw new CeldaDesocupadaException("ORIGEN VACIO | Fila: " + coordenadas.fila() + ", columna: " + coordenadas.columna());
         var anteriorOcupante = ocupante;
         this.ocupante = null;
         return anteriorOcupante;
