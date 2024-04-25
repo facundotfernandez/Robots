@@ -32,7 +32,7 @@ public class RobotsApp extends Application {
         launch();
     }
 
-    private static void setCursor() {
+    public static void setCursor() {
         Image imagenCursor = new Image(Objects.requireNonNull(RobotsApp.class.getResourceAsStream("/cursores/cursor.png")));
         escenario.getScene().setCursor(new ImageCursor(imagenCursor));
     }
@@ -41,7 +41,10 @@ public class RobotsApp extends Application {
         juego = new Juego(dificultad, filas, columnas);
         root = new VentanaJuego(escenario, juego.getNivel());
         escenario.setScene(new Scene(root, ANCHO_VENTANA, ALTO_VENTANA));
+        configurarVentana();
+    }
 
+    private static void configurarVentana() {
         setCursor();
         setVentanaMovible();
     }
@@ -112,9 +115,7 @@ public class RobotsApp extends Application {
     private static void configurarEstilos() {
         escenario.setResizable(false);
         escenario.initStyle(StageStyle.UNDECORATED);
-
-        setVentanaMovible();
-        setCursor();
+        configurarVentana();
     }
 
     public static void usarTP() {
@@ -138,6 +139,7 @@ public class RobotsApp extends Application {
     private static void actualizarPantalla() {
         root = new VentanaJuego(escenario, juego.getNivel());
         escenario.setScene(new Scene(root, ANCHO_VENTANA, ALTO_VENTANA));
+        configurarVentana();
         if (!juego.estaEnJuego()) mostrarJuegoPerdido();
     }
 

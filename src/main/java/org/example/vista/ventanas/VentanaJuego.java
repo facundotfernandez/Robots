@@ -93,7 +93,6 @@ public class VentanaJuego extends VBox {
         seccionPrincipal.setStyle("-fx-background-color: #7D9598");
         setSpacing(0);
 
-        setCursor();
         seccionPrincipal.setOnMouseMoved(event -> {
             int orientacion = Direccion.getDireccion(calcularDistancia(event));
             if (orientacion != orientacionCursor) {
@@ -187,11 +186,6 @@ public class VentanaJuego extends VBox {
     private void setCursor(int tipo) {
         Image imagenCursor = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/cursores/cursor-" + tipo + ".png")));
         seccionPrincipal.setCursor(new ImageCursor(imagenCursor, 16, 16));
-    }
-
-    private void setCursor() {
-        Image imagenCursor = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/cursores/cursor.png")));
-        setCursor(new ImageCursor(imagenCursor, 0, 0));
     }
 
 }
