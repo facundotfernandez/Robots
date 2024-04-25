@@ -130,7 +130,8 @@ public class VentanaJuego extends VBox {
                     esperaEleccionCelda = false;
                     int fila = (int) (event.getY() / DIMENSION_CELDA);
                     int col = (int) (event.getX() / DIMENSION_CELDA);
-                    RobotsApp.usarTP(fila, col);
+                    if (fila >= 0 && fila < filasTablero && col >= 0 && col < columnasTablero)
+                        RobotsApp.usarTP(fila, col);
                 } else {
                     RobotsApp.jugarTurno(calcularDistancia(event));
                 }
@@ -164,16 +165,16 @@ public class VentanaJuego extends VBox {
 
     private void setControladorBoton(Boton boton, int i) {
         if (i == 0) {
-            boton.setOnAction(event -> {
+            boton.setOnAction(_ -> {
                 RobotsApp.usarTP();
             });
         } else if (i == 1) {
-            boton.setOnAction(event -> {
+            boton.setOnAction(_ -> {
                 esperaEleccionCelda = true;
             });
             if (tpSeguros == 0) boton.setDisable(true);
         } else {
-            boton.setOnAction(event -> {
+            boton.setOnAction(_ -> {
                 try {
                     RobotsApp.jugarTurno(CENTRO.getDireccion());
                 } catch (Exception e) {

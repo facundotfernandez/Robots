@@ -4,7 +4,7 @@ import static org.example.modelo.utilidades.Constantes.MULTIPLICADOR_PUNTAJE;
 
 public class Robot extends Personaje {
 
-    private final int multiplicador;
+    private int multiplicador;
 
     public Robot(int multiplicador) {
         super(multiplicador * MULTIPLICADOR_PUNTAJE);
@@ -22,6 +22,10 @@ public class Robot extends Personaje {
      */
     public int getMultiplicador() {
         return multiplicador;
+    }
+
+    public void destruir() {
+        this.multiplicador *= 0;
     }
 
 
