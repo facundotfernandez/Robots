@@ -21,6 +21,7 @@ public class BarraDeTitulo extends HBox {
         setHgrow(container, Priority.ALWAYS);
         setStyle("-fx-background-color: #E9E9E9");
         setSpacing(0);
+        setPrefHeight(64);
 
         getChildren().addAll(icono, container, botonMinimizar, botonCerrar);
     }

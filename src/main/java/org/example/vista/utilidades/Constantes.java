@@ -14,10 +14,10 @@ public class Constantes {
     public static final String[] ETIQUETAS_ESTADO_JUEGO = {"Nivel:", "Puntaje:"};
     public static final String[] ETIQUETAS_CONFIGURACION = {"DIFICULTAD", "FILAS", "COLUMNAS"};
     public static final String ETIQUETA_MENU = "Menú Principal";
-    public static final int[] OPCIONES_FILAS = {10, 15, 20};
+    public static final int[] OPCIONES_FILAS = {10, 16, 20};
     public static final int[] OPCIONES_COLUMNAS = {25, 35, 45};
     public static final int ANCHO_VENTANA = 1440;
-    public static final int ALTO_VENTANA = 818;
+    public static final int ALTO_VENTANA = 832;
     public static final Map<String, Integer> DIFICULTADES = new LinkedHashMap<>();
     public static final Map<KeyCode, Direccion> CONTROLES = new LinkedHashMap<>();
 
@@ -28,7 +28,7 @@ public class Constantes {
     }
 
     static {
-        CONTROLES.put(KeyCode.K, CENTRO);
+        CONTROLES.put(KeyCode.X, CENTRO);
         CONTROLES.put(KeyCode.E, ARRIBA_DER);
         CONTROLES.put(KeyCode.W, ARRIBA);
         CONTROLES.put(KeyCode.Q, ARRIBA_IZQ);

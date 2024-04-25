@@ -13,6 +13,5 @@ public class Subtitulo extends Label {
     private void configurarEstilos() {
         setFont(Font.font("Canterell", 14));
         setStyle("-fx-text-fill: #808080;");
-        setPadding(new Insets(0, 10, 0, 0));
     }
 }

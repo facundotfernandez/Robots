@@ -15,9 +15,10 @@ public class Tablero<T> {
     }
 
     /**
+     *creea la matriz de tamaño filas x columnas
      * @param filas
      * @param columnas
-     * @return grilla de lista enlazada de listas enlazadas
+     * @return Matriz de listas enlazadas de listas enlazadas de Celdas<T>
      */
     private LinkedList<LinkedList<Celda<T>>> inicializarGrilla(int filas, int columnas) {
         var grilla = new LinkedList<LinkedList<Celda<T>>>();
@@ -45,6 +46,7 @@ public class Tablero<T> {
     }
 
     /**
+     * Devuelve la celda en fila-columna verificando si está dentro de los limites de la Grilla
      * @param fila
      * @param columna
      * @return celda en la localizacion fila-columna
@@ -103,8 +105,9 @@ public class Tablero<T> {
      * @throws CeldaInvalidaException
      */
     private void estaDentro(int fila, int columna) throws CeldaInvalidaException {
-        if (fila < 0 || fila > filas || columna < 0 || columna > columnas)
+        if (fila < 0 || fila >= filas || columna < 0 || columna >= columnas) {
             throw new CeldaInvalidaException("La celda no pertenece a la grilla");
+        }
     }
 
     /**
@@ -114,13 +117,13 @@ public class Tablero<T> {
      * @throws CeldaInvalidaException
      */
     private void estaDentro(Celda<T> celda) throws CeldaInvalidaException {
-        if (celda.getFila() < 0 || celda.getFila() > filas || celda.getColumna() < 0 || celda.getColumna() > columnas)
+        if (celda.getFila() < 0 || celda.getFila() >= filas || celda.getColumna() < 0 || celda.getColumna() >= columnas)
             throw new CeldaInvalidaException("La celda no pertenece a la grilla");
     }
 
     /**
      * @param celda
-     * @return lo que se encunetre en una celda específica
+     * @return lo que se encunetre<T> en una celda específica
      * @throws CeldaInvalidaException
      * @throws CeldaDesocupadaException
      */

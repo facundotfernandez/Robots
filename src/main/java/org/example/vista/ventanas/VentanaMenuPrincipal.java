@@ -64,6 +64,7 @@ public class VentanaMenuPrincipal extends VBox {
     private void configurarEstilos() {
         footer.setAlignment(Pos.CENTER);
 
+        VBox.setVgrow(main, Priority.ALWAYS);
         setVgrow(main, Priority.ALWAYS);
         main.setAlignment(Pos.CENTER);
         setStyle("-fx-background-color: #DCDAD3");

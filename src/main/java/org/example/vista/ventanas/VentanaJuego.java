@@ -5,7 +5,9 @@ import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.modelo.jugabilidad.Nivel;
@@ -81,22 +83,14 @@ public class VentanaJuego extends VBox {
 
         BloqueDeBotones footer = crearBotonesAcciones(tpSeguros);
 
-        seccionPrincipal.setPrefHeight(filasTablero * DIMENSION_CELDA);
+        VBox.setVgrow(seccionPrincipal, Priority.ALWAYS);
         seccionPrincipal.setAlignment(Pos.CENTER);
         seccionPrincipal.setStyle("-fx-background-color: #7D9598");
         setSpacing(0);
 
+        setCursor();
         seccionPrincipal.setOnMouseMoved(event -> {
-            double mouseX = event.getX();
-            double mouseY = event.getY();
-            int fila = (int) (mouseY / DIMENSION_CELDA);
-            int col = (int) (mouseX / DIMENSION_CELDA);
-            int corrimientoX = (int) ((getWidth() - columnasTablero * DIMENSION_CELDA) / (2 * DIMENSION_CELDA));
-
-            int filaCentro = jugador.getFila();
-            int centerCol = jugador.getColumna() + corrimientoX;
-
-            int orientacion = Direccion.getDireccion(Direccion.calcularDistancia(filaCentro, centerCol, fila, col));
+            int orientacion = Direccion.getDireccion(calcularDistancia(event));
             if (orientacion != orientacionCursor) {
                 setCursor(orientacion);
                 this.orientacionCursor = orientacion;
@@ -105,8 +99,21 @@ public class VentanaJuego extends VBox {
 
         this.seccionPrincipal = seccionPrincipal;
         this.getChildren().addAll(new BarraDeTitulo(escenario), header, seccionPrincipal, footer);
-
         configurarControladores();
+    }
+
+    private int[] calcularDistancia(MouseEvent event) {
+        double mouseX = event.getX();
+        double mouseY = event.getY();
+        int fila = (int) (mouseY / DIMENSION_CELDA);
+        int col = (int) (mouseX / DIMENSION_CELDA);
+        int corrimientoY = (int) ((seccionPrincipal.getHeight() - filasTablero * DIMENSION_CELDA) / (2 * DIMENSION_CELDA));
+        int corrimientoX = (int) ((getWidth() - columnasTablero * DIMENSION_CELDA) / (2 * DIMENSION_CELDA));
+
+        int filaCentro = jugador.getFila() + corrimientoY;
+        int colCentro = jugador.getColumna() + corrimientoX;
+
+        return Direccion.calcularDistancia(filaCentro, colCentro, fila, col);
     }
 
     private void configurarControladores() {
@@ -115,17 +122,8 @@ public class VentanaJuego extends VBox {
 
     private void configurarControladorJugarTurno() {
         seccionPrincipal.setOnMouseClicked(event -> {
-            double mouseX = event.getX();
-            double mouseY = event.getY();
-            int fila = (int) (mouseY / DIMENSION_CELDA);
-            int col = (int) (mouseX / DIMENSION_CELDA);
-            int corrimientoX = (int) ((getWidth() - columnasTablero * DIMENSION_CELDA) / (2 * DIMENSION_CELDA));
-
-            int filaCentro = jugador.getFila();
-            int centerCol = jugador.getColumna() + corrimientoX;
-
             try {
-                RobotsApp.jugarTurno(Direccion.calcularDistancia(filaCentro, centerCol, fila, col));
+                RobotsApp.jugarTurno(calcularDistancia(event));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -149,13 +147,17 @@ public class VentanaJuego extends VBox {
             Boton boton = new Boton(ETIQUETAS_BOTONES_JUEGO[i] + ((i == 1) ? (" " + tpSeguros) : ""));
             botones.add(boton);
         }
-
         return new BloqueDeBotones(botones);
     }
 
     private void setCursor(int tipo) {
         Image imagenCursor = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/cursores/cursor-" + tipo + ".png")));
         seccionPrincipal.setCursor(new ImageCursor(imagenCursor, 16, 16));
+    }
+
+    private void setCursor() {
+        Image imagenCursor = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/cursores/cursor.png")));
+        setCursor(new ImageCursor(imagenCursor, 0, 0));
     }
 
 }

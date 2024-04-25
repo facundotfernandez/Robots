@@ -17,7 +17,6 @@ public class Titulo extends Label {
     void configurarEstilos() {
         setFont(Font.font("Canterell", FontWeight.BOLD, 18));
         setStyle("-fx-text-fill: #343A3B;");
-        setPadding(new Insets(0, 10, 0, 0));
         setAlignment(Pos.CENTER);
     }
 }

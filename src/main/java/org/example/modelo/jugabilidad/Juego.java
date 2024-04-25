@@ -21,7 +21,11 @@ public class Juego {
         enJuego = true;
         nivel.iniciar();
     }
-
+    /**
+    *verifica si la dificultad del Ju
+    *@param dificultad
+    *@throws Exception
+    */
     private void validarDificultad(int dificultad) throws Exception {
         if (dificultad < FACIL || dificultad > DIFICIL) {
             throw new Exception("La dificultad no es válida");
@@ -49,7 +53,7 @@ public class Juego {
     public void jugarTurno(int[] direccion) throws Exception {
         try {
             nivel.jugarTurno(direccion);
-            if (!nivel.hayRobots()) avanzarNivel();
+            if (nivel.noHayRobots()) avanzarNivel();
         } catch (ColisionConJugadorException e) {
             juegoPerdido();
         }
@@ -70,11 +74,6 @@ public class Juego {
     }
 
     private void usarTP(int fila, int columna) throws Exception {
-        try {
-            nivel.jugarTurno(fila, columna);
-            if (!nivel.hayRobots()) avanzarNivel();
-        } catch (ColisionConJugadorException e) {
-            juegoPerdido();
-        }
+        jugarTurno(new int[]{fila, columna});
     }
 }

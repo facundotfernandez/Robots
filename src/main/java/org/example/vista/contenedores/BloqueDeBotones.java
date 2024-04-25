@@ -21,13 +21,10 @@ public class BloqueDeBotones extends VBox {
         for (Boton boton : botones) {
             HBox.setHgrow(boton, Priority.ALWAYS);
             boton.setMaxWidth(Double.MAX_VALUE);
-            VBox.setVgrow(boton, Priority.ALWAYS);
-            boton.setMaxHeight(Double.MAX_VALUE);
+            /*VBox.setVgrow(boton, Priority.ALWAYS);
+            boton.setMaxHeight(Double.MAX_VALUE);*/
         }
 
         VBox.setVgrow(contenedor, Priority.ALWAYS);
-        contenedor.setMaxHeight(Double.MAX_VALUE);
-
-        VBox.setVgrow(this, Priority.ALWAYS);
     }
 }

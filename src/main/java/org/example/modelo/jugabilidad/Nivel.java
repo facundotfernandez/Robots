@@ -72,6 +72,7 @@ public class Nivel {
 
     public void ubicarEnCentro(Personaje ocupante) throws CeldaOcupadaException {
         tablero.ubicarEnCentro(ocupante);
+        ocupante.mover(getFilas() / 2, getColumnas() / 2);
     }
 
     private boolean esRobot(Personaje personaje) {
@@ -105,8 +106,8 @@ public class Nivel {
         }
     }
 
-    public boolean hayRobots() {
-        return !robots.isEmpty();
+    public boolean noHayRobots() {
+        return robots.isEmpty();
     }
 
     public void moverRobots(Punto ubicacion) throws CeldaDesocupadaException, ColisionConJugadorException, CeldaOcupadaException {
