@@ -58,37 +58,78 @@ public class Nivel {
         return listado;
     }
 
+    /**
+     *
+     * @return Tablero<Personaje>
+     */
     public Tablero<Personaje> getTablero() {
         return tablero;
     }
 
+    /**
+     *
+     * @return el puntaje acumulado por el juaador
+     */
     public int getPuntaje() {
         return jugador.getPuntaje();
     }
 
+    /**
+     * Ubica el personaje en una celda aleatoria mediante "tablero.ubicar"
+     * @param ocupante
+     * @throws CeldaOcupadaException
+     */
     public void ubicar(Personaje ocupante) throws CeldaOcupadaException {
         var ubicacion = tablero.ubicar(ocupante);
         ocupante.mover(ubicacion[0], ubicacion[1]);
     }
 
+    /**
+     * Ubica el personaje en una fila-columna mediante "tablero.mover", pudiendo o no colisionar
+     * @param ocupante
+     * @throws ColisionConJugadorException
+     * @throws CeldaOcupadaException
+     */
     public void ubicar(Personaje ocupante, int fila, int columna) throws ColisionConJugadorException, CeldaDesocupadaException, CeldaOcupadaException {
         tablero.mover(ocupante.getFila(), ocupante.getColumna(), fila, columna);
         ocupante.mover(fila, columna);
     }
-
+    /**
+     * Ubica el personaje en la celda central mediante "tablero.ubicarEnCentro"
+     * @param ocupante
+     * @throws CeldaOcupadaException
+     */
     public void ubicarEnCentro(Personaje ocupante) throws CeldaOcupadaException {
         tablero.ubicarEnCentro(ocupante);
         ocupante.mover(getFilas() / 2, getColumnas() / 2);
     }
 
+    /**
+     * verifica si Personaje se trata de un robot
+     * @param personaje
+     * @return True en el caso que sea Robot, False en caso contrario
+     */
     private boolean esRobot(Personaje personaje) {
         return personaje.getClass() == Robot.class;
     }
 
+    /**
+     * verifica si Personaje se trata de un jugador
+     * @param personaje
+     * @return True en el caso que sea Jugador, False en caso contrario
+     */
     private boolean esJugador(Personaje personaje) {
         return personaje.getClass() == Jugador.class;
     }
 
+    /**
+     * intenta mover al Personaje en la Direccion indicada; si ocurre una colision robot-robot o personaje-robot se maneja de manera correspondiente
+     * @param personaje
+     * @param direccion
+     * @throws CeldaDesocupadaException
+     * @throws ColisionConJugadorException
+     * @throws CeldaOcupadaException
+     */
     public void mover(Personaje personaje, int[] direccion) throws CeldaDesocupadaException, ColisionConJugadorException, CeldaOcupadaException {
         try {
             tablero.mover(personaje.getFila(), personaje.getColumna(), direccion);
@@ -112,10 +153,21 @@ public class Nivel {
         }
     }
 
+    /**
+     * verifica si quedan robots en el nivel
+     * @return True si no hay Robots, False caso contrario
+     */
     public boolean noHayRobots() {
         return robots.isEmpty();
     }
 
+    /**
+     * Mueve a los robots en funcion del movimiento del jugador, manjenado todos los casos borde
+     * @param ubicacion
+     * @throws CeldaDesocupadaException
+     * @throws ColisionConJugadorException
+     * @throws CeldaOcupadaException
+     */
     public void moverRobots(Punto ubicacion) throws CeldaDesocupadaException, ColisionConJugadorException, CeldaOcupadaException {
         //var robotsVivos = new LinkedList<Robot>();
         for (Robot robot : robots) {
@@ -126,6 +178,10 @@ public class Nivel {
         }
     }
 
+    /**
+     * inicia a los PErsonajes en el tablero; al Jugador en el centro, y a los robots en sus celdas
+     * @throws CeldaOcupadaException
+     */
     public void iniciar() throws CeldaOcupadaException {
         ubicarEnCentro(jugador);
 
@@ -134,6 +190,13 @@ public class Nivel {
         }
     }
 
+    /**
+     * intenta ubicar al jugador en la fila-columna y mueve a los robots en funcion del mismo; manejando las excepciones
+     * @param fila
+     * @param columna
+     * @throws CeldaDesocupadaException
+     * @throws ColisionConJugadorException
+     */
     public void jugarTurno(int fila, int columna) throws CeldaDesocupadaException, ColisionConJugadorException {
         try {
             ubicar(jugador, fila, columna);
@@ -150,18 +213,33 @@ public class Nivel {
         moverRobots(jugador.getUbicacion());
     }
 
+    /**
+     *
+     * @return filas del tablero
+     */
     public int getFilas() {
         return tablero.getFilas();
     }
 
+    /**
+     *
+     * @return columnas del tablero
+     */
     public int getColumnas() {
         return tablero.getColumnas();
     }
-
+    /**
+     *
+     * @return tpsSeguros del jugador
+     */
     public int getTPSeguros() {
         return jugador.getTpSeguros();
     }
 
+    /**
+     *
+     * @return jugador
+     */
     public Jugador getJugador() {
         return jugador;
     }
