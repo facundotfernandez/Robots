@@ -26,6 +26,7 @@ import org.example.vista.contenedores.Encabezado;
 import java.util.LinkedList;
 import java.util.Objects;
 
+import static org.example.modelo.utilidades.Direccion.CENTRO;
 import static org.example.vista.utilidades.Constantes.*;
 
 public class VentanaJuego extends VBox {
@@ -34,9 +35,11 @@ public class VentanaJuego extends VBox {
     private final Jugador jugador;
     private final int filasTablero;
     private final int columnasTablero;
+    private final int tpSeguros;
     Stage escenario;
     private GridPane seccionPrincipal;
     private int orientacionCursor;
+    private boolean esperaEleccionCelda;
 
     public VentanaJuego(Stage escenario, Nivel nivel) {
         this.tablero = nivel.getTablero();
@@ -45,7 +48,9 @@ public class VentanaJuego extends VBox {
         this.filasTablero = tablero.getFilas();
         this.columnasTablero = tablero.getColumnas();
         this.jugador = nivel.getJugador();
-        inicializarComponentes(nivel.getId(), nivel.getPuntaje(), nivel.getTPSeguros());
+        this.tpSeguros = nivel.getTPSeguros();
+        this.esperaEleccionCelda = false;
+        inicializarComponentes(nivel.getId(), nivel.getPuntaje(), tpSeguros);
     }
 
     private void agregarImagenCelda(GridPane contenedor, String ruta, int x, int y) {
@@ -103,10 +108,8 @@ public class VentanaJuego extends VBox {
     }
 
     private int[] calcularDistancia(MouseEvent event) {
-        double mouseX = event.getX();
-        double mouseY = event.getY();
-        int fila = (int) (mouseY / DIMENSION_CELDA);
-        int col = (int) (mouseX / DIMENSION_CELDA);
+        int fila = (int) (event.getY() / DIMENSION_CELDA);
+        int col = (int) (event.getX() / DIMENSION_CELDA);
         int corrimientoY = (int) ((seccionPrincipal.getHeight() - filasTablero * DIMENSION_CELDA) / (2 * DIMENSION_CELDA));
         int corrimientoX = (int) ((getWidth() - columnasTablero * DIMENSION_CELDA) / (2 * DIMENSION_CELDA));
 
@@ -123,7 +126,14 @@ public class VentanaJuego extends VBox {
     private void configurarControladorJugarTurno() {
         seccionPrincipal.setOnMouseClicked(event -> {
             try {
-                RobotsApp.jugarTurno(calcularDistancia(event));
+                if (esperaEleccionCelda) {
+                    esperaEleccionCelda = false;
+                    int fila = (int) (event.getY() / DIMENSION_CELDA);
+                    int col = (int) (event.getX() / DIMENSION_CELDA);
+                    RobotsApp.usarTP(fila, col);
+                } else {
+                    RobotsApp.jugarTurno(calcularDistancia(event));
+                }
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -131,6 +141,7 @@ public class VentanaJuego extends VBox {
 
         setOnKeyReleased(event -> {
             KeyCode tecla = event.getCode();
+            esperaEleccionCelda = false;
             if (CONTROLES.containsKey(tecla)) {
                 try {
                     RobotsApp.jugarTurno(CONTROLES.get(tecla).getDireccion());
@@ -145,9 +156,31 @@ public class VentanaJuego extends VBox {
         LinkedList<Boton> botones = new LinkedList<>();
         for (int i = 0; i < ETIQUETAS_BOTONES_JUEGO.length; i++) {
             Boton boton = new Boton(ETIQUETAS_BOTONES_JUEGO[i] + ((i == 1) ? (" " + tpSeguros) : ""));
+            setControladorBoton(boton, i);
             botones.add(boton);
         }
         return new BloqueDeBotones(botones);
+    }
+
+    private void setControladorBoton(Boton boton, int i) {
+        if (i == 0) {
+            boton.setOnAction(event -> {
+                RobotsApp.usarTP();
+            });
+        } else if (i == 1) {
+            boton.setOnAction(event -> {
+                esperaEleccionCelda = true;
+            });
+            if (tpSeguros == 0) boton.setDisable(true);
+        } else {
+            boton.setOnAction(event -> {
+                try {
+                    RobotsApp.jugarTurno(CENTRO.getDireccion());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
     }
 
     private void setCursor(int tipo) {

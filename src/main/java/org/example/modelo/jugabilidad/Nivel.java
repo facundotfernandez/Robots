@@ -30,14 +30,26 @@ public class Nivel {
         this.jugador = jugador;
     }
 
+    /**
+     * Devuelve el ID del nivel
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * @return La lista<Robot> del Nivel
+     */
     public LinkedList<Robot> getRobots() {
         return robots;
     }
 
+    /**
+     * crea una lista de robots de cantidad definida por parámetro
+     *
+     * @param cantidad
+     * @return lista<Robots>
+     */
     public LinkedList<Robot> crearRobots(int cantidad) {
         LinkedList<Robot> listado = new LinkedList<>();
         for (int i = 0; i < cantidad; i++) {
@@ -59,14 +71,8 @@ public class Nivel {
         ocupante.mover(ubicacion[0], ubicacion[1]);
     }
 
-    public void ubicar(Personaje ocupante, int fila, int columna) throws ColisionConJugadorException {
-        try {
-            tablero.mover(ocupante.getFila(), ocupante.getColumna(), fila, columna);
-        } catch (CeldaOcupadaException e) {
-            throw new ColisionConJugadorException();
-        } catch (CeldaDesocupadaException e) {
-            throw new RuntimeException(e);
-        }
+    public void ubicar(Personaje ocupante, int fila, int columna) throws ColisionConJugadorException, CeldaDesocupadaException, CeldaOcupadaException {
+        tablero.mover(ocupante.getFila(), ocupante.getColumna(), fila, columna);
         ocupante.mover(fila, columna);
     }
 
@@ -100,7 +106,7 @@ public class Nivel {
                 tablero.forzarOcupacion(personaje.getFila(), personaje.getColumna(), null);
                 tablero.forzarOcupacion(filaDestino, columnaDestino, new Robot(INCENDIO, filaDestino, columnaDestino));
                 robots.remove((Robot) personaje);
-                robots.remove((Robot) ocupanteDestino);
+                if (ocupanteDestino.getPuntaje() != 0) robots.remove((Robot) ocupanteDestino);
                 jugador.addPuntos(personaje.getPuntaje() + ocupanteDestino.getPuntaje());
             }
         }
@@ -111,6 +117,7 @@ public class Nivel {
     }
 
     public void moverRobots(Punto ubicacion) throws CeldaDesocupadaException, ColisionConJugadorException, CeldaOcupadaException {
+        //var robotsVivos = new LinkedList<Robot>();
         for (Robot robot : robots) {
             int[] direccion = Direccion.calcularDistancia(robot.getFila(), robot.getColumna(), ubicacion.fila(), ubicacion.columna());
             direccion[0] *= robot.getMultiplicador();
@@ -127,11 +134,14 @@ public class Nivel {
         }
     }
 
-    public void jugarTurno(int fila, int columna) throws CeldaDesocupadaException, ColisionConJugadorException, CeldaOcupadaException {
+    public void jugarTurno(int fila, int columna) throws CeldaDesocupadaException, ColisionConJugadorException {
         try {
             ubicar(jugador, fila, columna);
+            jugador.mover(fila, columna);
             moverRobots(jugador.getUbicacion());
         } catch (CeldaInvalidaException _) {
+        } catch (CeldaOcupadaException _) {
+            throw new ColisionConJugadorException();
         }
     }
 

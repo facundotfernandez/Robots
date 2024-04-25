@@ -65,10 +65,7 @@ public class RobotsApp extends Application {
 
     public static void jugarTurno(int[] direccion) throws Exception {
         juego.jugarTurno(direccion);
-        root = new VentanaJuego(escenario, juego.getNivel());
-        escenario.setScene(new Scene(root, ANCHO_VENTANA, ALTO_VENTANA));
-
-        if (!juego.estaEnJuego()) mostrarJuegoPerdido();
+        actualizarPantalla();
     }
 
     private static void mostrarJuegoPerdido() {
@@ -118,6 +115,30 @@ public class RobotsApp extends Application {
 
         setVentanaMovible();
         setCursor();
+    }
+
+    public static void usarTP() {
+        try {
+            juego.usarTP();
+            actualizarPantalla();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void usarTP(int fila, int col) {
+        try {
+            juego.usarTPSeguro(fila, col);
+            actualizarPantalla();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void actualizarPantalla() {
+        root = new VentanaJuego(escenario, juego.getNivel());
+        escenario.setScene(new Scene(root, ANCHO_VENTANA, ALTO_VENTANA));
+        if (!juego.estaEnJuego()) mostrarJuegoPerdido();
     }
 
     @Override

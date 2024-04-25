@@ -21,35 +21,62 @@ public class Juego {
         enJuego = true;
         nivel.iniciar();
     }
+
     /**
-    *verifica si la dificultad del Ju
-    *@param dificultad
-    *@throws Exception
-    */
+     * verifica si la dificultad del Juego
+     *
+     * @param dificultad
+     * @throws Exception
+     */
     private void validarDificultad(int dificultad) throws Exception {
         if (dificultad < FACIL || dificultad > DIFICIL) {
             throw new Exception("La dificultad no es válida");
         }
     }
 
+    /**
+     * Avanza de Nivel y lo inicializa
+     *
+     * @throws Exception
+     */
     private void avanzarNivel() throws Exception {
         this.nivel = new Nivel(nivel.getId() + 1, jugador, dificultad, nivel.getFilas(), nivel.getColumnas());
         jugador.addTPSeguro();
         nivel.iniciar();
     }
 
+    /**
+     * Establece en false el atributo juegoPerdido
+     */
     private void juegoPerdido() {
         enJuego = false;
     }
+
+    /**
+     * verifica se sigue en juego
+     *
+     * @return True si está en jeugo, False en caso contrio
+     */
 
     public boolean estaEnJuego() {
         return enJuego;
     }
 
+    /**
+     * vDevuelve el Nivel actual
+     *
+     * @return Nivel
+     */
     public Nivel getNivel() {
         return nivel;
     }
 
+    /**
+     * intenta jugar el turno en una direccion; si no quedan robots avanza de nivel; si arroja ColisionConJugadorException termina el juego.
+     *
+     * @param direccion
+     * @throws Exception
+     */
     public void jugarTurno(int[] direccion) throws Exception {
         try {
             nivel.jugarTurno(direccion);
@@ -59,21 +86,42 @@ public class Juego {
         }
     }
 
-    private void usarTP() throws Exception {
+    /**
+     * Usa el tpSeguro en una fila-columnamoviendo al jugador a la posición especificada
+     *
+     * @param fila
+     * @param columna
+     * @throws Exception
+     */
+    public void usarTPSeguro(int fila, int columna) throws Exception {
+        jugador.usarTPseguro();
+        usarTP(fila, columna);
+    }
+
+    /**
+     * usa el TP a una fila-columna aleatorias dentro de las filas-columnas del tablero
+     *
+     * @throws Exception
+     */
+    public void usarTP() throws Exception {
         var fila = new Random().nextInt(nivel.getFilas());
         var columna = new Random().nextInt(nivel.getColumnas());
         usarTP(fila, columna);
     }
 
-    private void usarTPSeguro(int fila, int columna) throws Exception {
-        try {
-            jugador.usarTPseguro();
-        } catch (IndexOutOfBoundsException _) {
-        }
-        usarTP(fila, columna);
-    }
-
+    /**
+     * intenta jugar un turno en el nivel a fila-columna. Si no hay robots, avanza al siguiente nivel. Si se produce una colisión, se llama a juegoPerdido
+     *
+     * @param fila
+     * @param columna
+     * @throws Exception
+     */
     private void usarTP(int fila, int columna) throws Exception {
-        jugarTurno(new int[]{fila, columna});
+        try {
+            nivel.jugarTurno(fila, columna);
+            if (nivel.noHayRobots()) avanzarNivel();
+        } catch (ColisionConJugadorException e) {
+            juegoPerdido();
+        }
     }
 }
