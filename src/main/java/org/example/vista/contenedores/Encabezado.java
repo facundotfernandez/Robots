@@ -14,10 +14,14 @@ public class Encabezado extends HBox {
     private final VBox containerTitulo;
     private final HBox containerSubtitulos;
 
+    /**
+     * Inicializa los componentes del contenedor
+     *
+     * @param subtitulos Subtitulos del contenedor
+     */
     public Encabezado(String[] subtitulos) {
         this.containerTitulo = new VBox();
         getChildren().add(containerTitulo);
-
         containerTitulo.getChildren().add(new Titulo(TITULO));
 
         this.containerSubtitulos = new HBox();
@@ -29,6 +33,9 @@ public class Encabezado extends HBox {
         configurarEstilos();
     }
 
+    /**
+     * Configuración de estilos básicos del contenedor
+     */
     private void configurarEstilos() {
         Font.loadFont(getClass().getResourceAsStream("Canterell-Regular.ttf"), 10);
 
@@ -38,7 +45,7 @@ public class Encabezado extends HBox {
         containerSubtitulos.setSpacing(5);
         setAlignment(Pos.CENTER);
 
-        setStyle("-fx-background-color: #E9E9E9; ");
+        setStyle("-fx-background-color: #E9E9E9;");
         setPrefHeight(64);
     }
 }

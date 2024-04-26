@@ -1,8 +1,6 @@
 package org.example.vista.ventanas;
 
 import javafx.geometry.Pos;
-import javafx.scene.ImageCursor;
-import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -19,21 +17,29 @@ import java.util.Objects;
 import static org.example.vista.utilidades.Constantes.*;
 
 public class VentanaMenuPrincipal extends VBox {
+    private final VBox main;
+    private final BloqueDeElecciones footer;
     ComboBox<String> eleccionDificultades;
     ComboBox<Integer> eleccionFilas;
     ComboBox<Integer> eleccionColumnas;
-    private Encabezado header;
-    private VBox main;
-    private BloqueDeElecciones footer;
 
+    /**
+     * Inicializa los componentes de la Ventana
+     *
+     * @param escenario Escenario principal
+     */
     public VentanaMenuPrincipal(Stage escenario) {
-        inicializarComponentes(escenario);
+        this.main = crearSeccionPrincipal();
+        this.footer = crearBloqueDeElecciones();
+        this.getChildren().addAll(new BarraDeTitulo(escenario), new Encabezado(new String[]{ETIQUETA_MENU}), main, footer);
+        configurarEstilos();
     }
 
-    private void inicializarComponentes(Stage escenario) {
-        this.footer = crearBloqueDeElecciones();
-        this.header = new Encabezado(new String[]{ETIQUETA_MENU});
-        this.main = new VBox();
+    /**
+     * @return Seccion principal con el botonComenzarJuego y la imágen principal configurados
+     */
+    private VBox crearSeccionPrincipal() {
+        var seccionPrincipal = new VBox();
 
         BotonComenzar botonComenzarJuego = new BotonComenzar();
         botonComenzarJuego.setOnAction(_ -> {
@@ -48,19 +54,27 @@ public class VentanaMenuPrincipal extends VBox {
             }
         });
 
-
-        setImagenMenu(botonComenzarJuego);
-        this.getChildren().addAll(new BarraDeTitulo(escenario), header, main, footer);
-        configurarEstilos();
+        setImagenMenu(seccionPrincipal, botonComenzarJuego);
+        return seccionPrincipal;
     }
 
-    private void setImagenMenu(BotonComenzar botonComenzarJuego) {
+    /**
+     * Se inserta una imagen en la sección principal con el botonComenzarJuego en el centro
+     *
+     * @param seccion            Sección de la ventana en la que se inserta la imágen y el botonComenzarJuego
+     * @param botonComenzarJuego Boton que permite comenzar el juego y contiene las
+     *                           elecciones (Dificultad, filas, columnas) del usuario
+     */
+    private void setImagenMenu(Pane seccion, BotonComenzar botonComenzarJuego) {
         var bgMenu = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/tablero/menu_principal.png")));
         BackgroundImage bgImagen = new BackgroundImage(bgMenu, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(1.0, 1.0, true, true, true, true));
-        main.setBackground(new Background(bgImagen));
-        main.getChildren().add(botonComenzarJuego);
+        seccion.setBackground(new Background(bgImagen));
+        seccion.getChildren().add(botonComenzarJuego);
     }
 
+    /**
+     * Configuración de estilos básicos del escenario y la ventana
+     */
     private void configurarEstilos() {
         footer.setAlignment(Pos.CENTER);
 
@@ -69,19 +83,6 @@ public class VentanaMenuPrincipal extends VBox {
         main.setAlignment(Pos.CENTER);
         setStyle("-fx-background-color: #DCDAD3");
         setSpacing(0);
-
-        for (Node comboBox : footer.getChildren()) {
-            Image imagenCursor = new Image(Objects.requireNonNull(RobotsApp.class.getResourceAsStream("/cursores/cursor.png")));
-
-            comboBox.setOnMouseEntered(event -> {
-                comboBox.getScene().setCursor(new ImageCursor(imagenCursor));
-                event.consume();
-            });
-            comboBox.setOnMouseExited(event -> {
-                comboBox.setCursor(new ImageCursor(imagenCursor));
-                event.consume();
-            });
-        }
     }
 
     private BloqueDeElecciones crearBloqueDeElecciones() {

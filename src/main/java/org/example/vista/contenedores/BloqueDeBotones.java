@@ -9,6 +9,11 @@ import java.util.LinkedList;
 
 public class BloqueDeBotones extends VBox {
 
+    /**
+     * Inicializa los componentes del contenedor
+     *
+     * @param botones Listado de botones
+     */
     public BloqueDeBotones(LinkedList<Boton> botones) {
         super();
         var contenedor = new HBox();
@@ -17,14 +22,18 @@ public class BloqueDeBotones extends VBox {
         configurarEstilos(contenedor, botones);
     }
 
+
+    /**
+     * Configuración de estilos básicos del contenedor
+     *
+     * @param contenedor Contenedor al que pertenece cada botón
+     * @param botones    Listado de botones
+     */
     private void configurarEstilos(HBox contenedor, LinkedList<Boton> botones) {
         for (Boton boton : botones) {
             HBox.setHgrow(boton, Priority.ALWAYS);
             boton.setMaxWidth(Double.MAX_VALUE);
-            /*VBox.setVgrow(boton, Priority.ALWAYS);
-            boton.setMaxHeight(Double.MAX_VALUE);*/
         }
-
         VBox.setVgrow(contenedor, Priority.ALWAYS);
     }
 }

@@ -9,16 +9,36 @@ import java.util.Map;
 import static org.example.modelo.utilidades.Direccion.*;
 
 public class Constantes {
+    
+    /**
+     * Información básica de las ventanas
+     */
     public static final String TITULO = "Robots";
+    public static final String ETIQUETA_MENU = "Menú Principal";
+
+    /**
+     * Información ventana del juego
+     */
     public static final String[] ETIQUETAS_BOTONES_JUEGO = {"Teleportación aleatoria", "Teleportación segura\nDisponibles:", "Esperar a los Robots"};
     public static final String[] ETIQUETAS_ESTADO_JUEGO = {"Nivel:", "Puntaje:"};
+
+    /**
+     * Información elecciones del usuario en el Menú principal
+     */
     public static final String[] ETIQUETAS_CONFIGURACION = {"DIFICULTAD", "FILAS", "COLUMNAS"};
-    public static final String ETIQUETA_MENU = "Menú Principal";
     public static final int[] OPCIONES_FILAS = {10, 16, 20};
     public static final int[] OPCIONES_COLUMNAS = {25, 35, 45};
+    public static final Map<String, Integer> DIFICULTADES = new LinkedHashMap<>();
+
+    /**
+     * Dimensión ventana
+     */
     public static final int ANCHO_VENTANA = 1440;
     public static final int ALTO_VENTANA = 832;
-    public static final Map<String, Integer> DIFICULTADES = new LinkedHashMap<>();
+
+    /**
+     * Controles del Juego
+     */
     public static final Map<KeyCode, Direccion> CONTROLES = new LinkedHashMap<>();
 
     static {

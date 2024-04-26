@@ -9,6 +9,13 @@ import java.util.Objects;
 
 public class Icono extends StackPane {
 
+    /**
+     * Inicializa los componentes del componente con sus estilos aplicados
+     *
+     * @param ruta   Ruta relativa del archivo
+     * @param ancho  Ancho en píxeles
+     * @param altura Altura en píxeles
+     */
     public Icono(String ruta, double ancho, double altura) {
         Image imagen = new Image(Objects.requireNonNull(getClass().getResourceAsStream(ruta)));
 
