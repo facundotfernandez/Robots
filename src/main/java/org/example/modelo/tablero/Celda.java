@@ -6,11 +6,22 @@ public class Celda<T> {
     private final Punto coordenadas;
     private T ocupante;
 
+    /**
+    * Inicializa la Celda con fila-columna dadas
+    *@param fila
+    *@param columna
+    */
     public Celda(int fila, int columna) {
         this.coordenadas = new Punto(fila, columna);
         this.ocupante = null;
     }
 
+    /**
+    * Inicializa la celda con fila-columna y oucpante dados
+    *@param fila
+    *@param columna
+    *@param ocupante
+    */
     public Celda(int fila, int columna, T ocupante) {
         this.coordenadas = new Punto(fila, columna);
         this.ocupante = ocupante;

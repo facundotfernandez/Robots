@@ -6,11 +6,21 @@ public class Personaje {
     protected int puntaje;
     private Punto ubicacion;
 
+    /**
+    * Inicializa el Perosnaje con puntaje dado
+    *@param puntaje
+    */
     public Personaje(int puntaje) {
         this.puntaje = puntaje;
         this.ubicacion = null;
     }
 
+    /**
+    * Inicializa el Personaje con puntaje, fila-columna dados
+    *@param puntaje
+    *@param fila
+    @param columna
+    */
     public Personaje(int puntaje, int fila, int columna) {
         this.puntaje = puntaje;
         this.ubicacion = new Punto(fila, columna);

@@ -13,6 +13,12 @@ public class Juego {
     private Nivel nivel;
     private boolean enJuego;
 
+    /**
+    * Inicializa el Juego con dificultad, fila- columnas dadas
+    *@param dificultad
+    *@param filas
+    *@param columnas
+    */
     public Juego(int dificultad, int filas, int columnas) throws Exception {
         this.jugador = new Jugador((int) Math.ceil((((Math.pow(dificultad, 2) * 10) / Math.exp(dificultad)))), filas / 2, columnas / 2);
         validarDificultad(dificultad);

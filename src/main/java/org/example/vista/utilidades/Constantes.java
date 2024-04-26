@@ -9,7 +9,7 @@ import java.util.Map;
 import static org.example.modelo.utilidades.Direccion.*;
 
 public class Constantes {
-    
+
     /**
      * Información básica de las ventanas
      */
@@ -40,6 +40,7 @@ public class Constantes {
      * Controles del Juego
      */
     public static final Map<KeyCode, Direccion> CONTROLES = new LinkedHashMap<>();
+    public static final Map<KeyCode, String> CONTROLES_BOTONES = new LinkedHashMap<>();
 
     static {
         DIFICULTADES.put("Fácil", 2);
@@ -57,5 +58,10 @@ public class Constantes {
         CONTROLES.put(KeyCode.S, ABAJO);
         CONTROLES.put(KeyCode.C, ABAJO_DER);
         CONTROLES.put(KeyCode.D, DERECHA);
+    }
+
+    static {
+        CONTROLES_BOTONES.put(KeyCode.T, "TELEPORTACIÓN");
+        CONTROLES_BOTONES.put(KeyCode.R, "TELEPORTACIÓN SEGURA");
     }
 }

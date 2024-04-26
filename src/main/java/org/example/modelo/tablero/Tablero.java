@@ -8,6 +8,11 @@ public class Tablero<T> {
     private final int columnas;
     private final LinkedList<LinkedList<Celda<T>>> grilla;
 
+    /**
+    * Inicializa el tablero con fila-columnas dadas
+    *@param filas
+    *@param columnas
+    */
     public Tablero(int filas, int columnas) {
         this.filas = filas;
         this.columnas = columnas;
@@ -189,6 +194,7 @@ public class Tablero<T> {
     }
 
     /**
+     *ubica al ocupante en una celda aleatoria
      * @param ocupante
      * @return
      * @throws CeldaOcupadaException

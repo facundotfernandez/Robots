@@ -3,6 +3,12 @@ package org.example.modelo.unidades;
 public class Jugador extends Personaje {
     private int tpSeguros;
 
+    /**
+    * Inicializa el Jugador con con cantidad de tps seguros y su ubicacion en fila-columna
+    *@param tpSeguros
+    *@param fila
+    *@param columna
+    */
     public Jugador(int tpSeguros, int fila, int columna) {
         super(0, fila, columna);
         this.tpSeguros = tpSeguros;

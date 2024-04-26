@@ -1,25 +1,29 @@
 package org.example.vista;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.example.modelo.jugabilidad.Juego;
+import org.example.modelo.utilidades.Direccion;
 import org.example.vista.componentes.Boton;
 import org.example.vista.ventanas.VentanaJuego;
 import org.example.vista.ventanas.VentanaMenuPrincipal;
 
+import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
-import static org.example.vista.utilidades.Constantes.ALTO_VENTANA;
-import static org.example.vista.utilidades.Constantes.ANCHO_VENTANA;
+import static org.example.vista.utilidades.Constantes.*;
 
 
 public class RobotsApp extends Application {
@@ -107,22 +111,16 @@ public class RobotsApp extends Application {
     private static void mostrarJuegoPerdido() {
         Boton botonSalir = new Boton("SALIR");
         Boton botonReiniciar = new Boton("REINICIAR");
-
-        ButtonType buttonTypeReiniciar = new ButtonType("REINICIAR", ButtonBar.ButtonData.YES);
-        ButtonType buttonTypeSalir = new ButtonType("SALIR", ButtonBar.ButtonData.NO);
-
-        crearAlerta(botonReiniciar, buttonTypeReiniciar, botonSalir, buttonTypeSalir);
+        crearAlertaJuegoPerdido(botonReiniciar, botonSalir);
     }
 
     /**
      * Se crea un alerta dado que el juego está finalizado. Se permite volver a jugar o salir
      *
-     * @param botonReiniciar      Botón para reiniciar el juego
-     * @param buttonTypeReiniciar Contiene la información necesaria para que botonReiniciar ejecute un reinicio
-     * @param botonSalir          Botón para salir del juego
-     * @param buttonTypeSalir     Contiene la información necesaria para que botonReiniciar ejecute la salida
+     * @param botonReiniciar Botón para reiniciar el juego
+     * @param botonSalir     Botón para salir del juego
      */
-    private static void crearAlerta(Boton botonReiniciar, ButtonType buttonTypeReiniciar, Boton botonSalir, ButtonType buttonTypeSalir) {
+    private static void crearAlertaJuegoPerdido(Boton botonReiniciar, Boton botonSalir) {
         Alert alerta = new Alert(Alert.AlertType.NONE);
         alerta.initStyle(StageStyle.UNDECORATED);
         alerta.setHeaderText("¿Querés comenzar de nuevo?");
@@ -131,22 +129,51 @@ public class RobotsApp extends Application {
         barraBotones.getButtons().addAll(botonReiniciar, botonSalir);
 
         botonReiniciar.setOnAction(_ -> {
-            alerta.setResult(buttonTypeReiniciar);
+            alerta.setResult(ButtonType.OK);
             alerta.close();
+            RobotsApp.reiniciarJuego();
         });
 
         botonSalir.setOnAction(_ -> {
-            alerta.setResult(buttonTypeSalir);
+            alerta.setResult(ButtonType.CANCEL);
             alerta.close();
+            escenario.close();
         });
 
-        Optional<ButtonType> result = alerta.showAndWait();
-        result.ifPresent(buttonType -> {
-            if (buttonType == buttonTypeSalir) {
-                escenario.close();
-            } else if (buttonType == buttonTypeReiniciar) {
-                RobotsApp.reiniciarJuego();
-            }
+        alerta.showAndWait();
+    }
+
+    /**
+     * Se crea un alerta para mostrar los controles
+     *
+     * @param botonCerrar      Botón para cerrar el alerta
+     * @param buttonTypeCerrar Contiene la información necesaria para que botonCerrar cierre el alerta
+     */
+    private static void crearAlertaControles(Boton botonCerrar, ButtonType buttonTypeCerrar) {
+        Alert alerta = new Alert(Alert.AlertType.NONE);
+        alerta.initStyle(StageStyle.UNDECORATED);
+        alerta.setHeaderText("Controles del Juego");
+
+        ButtonBar barraBotones = (ButtonBar) alerta.getDialogPane().lookup(".button-bar");
+        barraBotones.getButtons().add(botonCerrar);
+
+        VBox controlesBox = new VBox(5);
+        controlesBox.setAlignment(Pos.TOP_CENTER);
+
+        for (Map.Entry<KeyCode, Direccion> tecla : CONTROLES.entrySet()) {
+            String etiqueta = String.valueOf(tecla.getValue());
+            controlesBox.getChildren().add(new Label(tecla.getKey() + " - " + (Objects.equals(etiqueta, "CENTRO") ? "ESPERAR" : etiqueta)));
+        }
+        for (Map.Entry<KeyCode, String> tecla : CONTROLES_BOTONES.entrySet()) {
+            controlesBox.getChildren().add(new Label(tecla.getKey() + " - " + tecla.getValue()));
+        }
+        alerta.getDialogPane().setContent(controlesBox);
+
+        botonCerrar.setOnAction(_ -> {
+            alerta.setResult(new ButtonType("CERRAR", ButtonBar.ButtonData.OK_DONE));
+        });
+        alerta.showAndWait().ifPresent(e -> {
+            if (e == buttonTypeCerrar) alerta.close();
         });
     }
 
@@ -157,6 +184,12 @@ public class RobotsApp extends Application {
         root = new VentanaMenuPrincipal(escenario);
         escenario.setScene(new Scene(root, ANCHO_VENTANA, ALTO_VENTANA));
         configurarEstilos();
+    }
+
+    private static void mostrarControles() {
+        Boton botonCerrar = new Boton("CERRAR");
+        ButtonType buttonTypeCerrar = new ButtonType("Salir", ButtonBar.ButtonData.OK_DONE);
+        crearAlertaControles(botonCerrar, buttonTypeCerrar);
     }
 
     /**
@@ -216,6 +249,6 @@ public class RobotsApp extends Application {
         RobotsApp.escenario = escenario;
         iniciarMenuPrincipal();
         escenario.show();
+        mostrarControles();
     }
-
 }

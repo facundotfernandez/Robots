@@ -82,13 +82,9 @@ public class VentanaJuego extends VBox {
      * @return Nombre del personaje
      */
     private String getTipoOcupante(Personaje personaje) {
-        if (personaje instanceof Jugador) {
-            return "jugador";
-        } else if (personaje instanceof Robot robot) {
-            return "robot-" + robot.getMultiplicador();
-        } else {
-            return "";
-        }
+        if (personaje instanceof Jugador) return "jugador";
+        else if (personaje instanceof Robot robot) return "robot-" + robot.getMultiplicador();
+        else return "";
     }
 
     /**
@@ -231,9 +227,7 @@ public class VentanaJuego extends VBox {
                     int dX = corrimiento[1];
 
                     if (validarEstaDentroConCorrimiento(fila, col, dY, dX)) RobotsApp.usarTP(fila - dY, col - dX);
-                } else {
-                    RobotsApp.jugarTurno(calcularDistancia(event));
-                }
+                } else RobotsApp.jugarTurno(calcularDistancia(event));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -248,6 +242,9 @@ public class VentanaJuego extends VBox {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
+            } else if (CONTROLES_BOTONES.containsKey(tecla)) {
+                if (CONTROLES_BOTONES.keySet().iterator().next() == tecla) RobotsApp.usarTP();
+                else esperaEleccionCelda = true;
             }
         });
     }
@@ -274,11 +271,9 @@ public class VentanaJuego extends VBox {
      */
     private void setControladorBoton(Boton boton, int i) {
         boton.setOnAction(_ -> {
-            if (i == 0) {
-                RobotsApp.usarTP();
-            } else if (i == 1) {
-                esperaEleccionCelda = true;
-            } else {
+            if (i == 0) RobotsApp.usarTP();
+            else if (i == 1) esperaEleccionCelda = true;
+            else {
                 try {
                     RobotsApp.jugarTurno(CENTRO.getDireccion());
                 } catch (Exception e) {
@@ -286,10 +281,7 @@ public class VentanaJuego extends VBox {
                 }
             }
         });
-
-        if (i == 1 && tpSeguros == 0) {
-            boton.setDisable(true);
-        }
+        if (i == 1 && tpSeguros == 0) boton.setDisable(true);
     }
 
     /**

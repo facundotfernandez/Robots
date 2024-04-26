@@ -22,6 +22,14 @@ public class Nivel {
     private final Tablero<Personaje> tablero;
     private final LinkedList<Robot> robots;
 
+    /**
+    * Inicializa el Nivel con un id, juagdor, dificultad y filas-columnas dados
+    *@param id
+    *@paramja jugador
+    *@param dificultad
+    *@param filas
+    *@param columnas
+    */
     public Nivel(int id, Jugador jugador, int dificultad, int filas, int columnas) {
         this.id = id;
         var cantRobots = id * dificultad;
