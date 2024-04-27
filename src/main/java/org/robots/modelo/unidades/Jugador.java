@@ -1,4 +1,4 @@
-package org.example.modelo.unidades;
+package org.robots.modelo.unidades;
 
 public class Jugador extends Personaje {
     private int tpSeguros;

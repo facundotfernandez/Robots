@@ -1,4 +1,4 @@
-package org.example.modelo.jugabilidad;
+package org.robots.modelo.jugabilidad;
 
 public class ColisionConJugadorException extends Exception {
 }

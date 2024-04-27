@@ -1,4 +1,4 @@
-package org.example.modelo.tablero;
+package org.robots.modelo.tablero;
 
 import java.util.LinkedList;
 import java.util.Random;

@@ -1,6 +1,6 @@
-package org.example.modelo.tablero;
+package org.robots.modelo.tablero;
 
-import org.example.modelo.utilidades.Punto;
+import org.robots.modelo.utilidades.Punto;
 
 public class Celda<T> {
     private final Punto coordenadas;

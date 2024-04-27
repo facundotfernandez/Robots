@@ -1,12 +1,12 @@
-package org.example.vista.utilidades;
+package org.robots.vista.utilidades;
 
 import javafx.scene.input.KeyCode;
-import org.example.modelo.utilidades.Direccion;
+import org.robots.modelo.utilidades.Direccion;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static org.example.modelo.utilidades.Direccion.*;
+import static org.robots.modelo.utilidades.Direccion.*;
 
 public class Constantes {
 

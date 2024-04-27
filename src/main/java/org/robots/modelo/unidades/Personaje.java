@@ -1,6 +1,6 @@
-package org.example.modelo.unidades;
+package org.robots.modelo.unidades;
 
-import org.example.modelo.utilidades.Punto;
+import org.robots.modelo.utilidades.Punto;
 
 public class Personaje {
     protected int puntaje;

@@ -1,20 +1,20 @@
-package org.example.modelo.jugabilidad;
+package org.robots.modelo.jugabilidad;
 
-import org.example.modelo.tablero.CeldaDesocupadaException;
-import org.example.modelo.tablero.CeldaInvalidaException;
-import org.example.modelo.tablero.CeldaOcupadaException;
-import org.example.modelo.tablero.Tablero;
-import org.example.modelo.unidades.Jugador;
-import org.example.modelo.unidades.Personaje;
-import org.example.modelo.unidades.Robot;
-import org.example.modelo.utilidades.Direccion;
-import org.example.modelo.utilidades.Punto;
+import org.robots.modelo.tablero.CeldaDesocupadaException;
+import org.robots.modelo.tablero.CeldaInvalidaException;
+import org.robots.modelo.tablero.CeldaOcupadaException;
+import org.robots.modelo.tablero.Tablero;
+import org.robots.modelo.unidades.Jugador;
+import org.robots.modelo.unidades.Personaje;
+import org.robots.modelo.unidades.Robot;
+import org.robots.modelo.utilidades.Direccion;
+import org.robots.modelo.utilidades.Punto;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import static org.example.modelo.utilidades.Constantes.TIPOS_DE_ROBOTS;
+import static org.robots.modelo.utilidades.Constantes.TIPOS_DE_ROBOTS;
 
 public class Nivel {
     private final int id;

@@ -1,4 +1,4 @@
-package org.example.vista.ventanas;
+package org.robots.vista.ventanas;
 
 import javafx.geometry.Pos;
 import javafx.scene.ImageCursor;
@@ -10,24 +10,24 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.example.modelo.jugabilidad.Nivel;
-import org.example.modelo.tablero.CeldaDesocupadaException;
-import org.example.modelo.tablero.Tablero;
-import org.example.modelo.unidades.Jugador;
-import org.example.modelo.unidades.Personaje;
-import org.example.modelo.unidades.Robot;
-import org.example.modelo.utilidades.Direccion;
-import org.example.vista.RobotsApp;
-import org.example.vista.componentes.Boton;
-import org.example.vista.contenedores.BarraDeTitulo;
-import org.example.vista.contenedores.BloqueDeBotones;
-import org.example.vista.contenedores.Encabezado;
+import org.robots.modelo.jugabilidad.Nivel;
+import org.robots.modelo.tablero.CeldaDesocupadaException;
+import org.robots.modelo.tablero.Tablero;
+import org.robots.modelo.unidades.Jugador;
+import org.robots.modelo.unidades.Personaje;
+import org.robots.modelo.unidades.Robot;
+import org.robots.modelo.utilidades.Direccion;
+import org.robots.vista.RobotsApp;
+import org.robots.vista.componentes.Boton;
+import org.robots.vista.contenedores.BarraDeTitulo;
+import org.robots.vista.contenedores.BloqueDeBotones;
+import org.robots.vista.contenedores.Encabezado;
 
 import java.util.LinkedList;
 import java.util.Objects;
 
-import static org.example.modelo.utilidades.Direccion.CENTRO;
-import static org.example.vista.utilidades.Constantes.*;
+import static org.robots.modelo.utilidades.Direccion.CENTRO;
+import static org.robots.vista.utilidades.Constantes.*;
 
 public class VentanaJuego extends VBox {
     private static final int DIMENSION_CELDA = 32; // En píxeles

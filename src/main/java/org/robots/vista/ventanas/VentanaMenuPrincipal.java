@@ -1,20 +1,20 @@
-package org.example.vista.ventanas;
+package org.robots.vista.ventanas;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import org.example.vista.RobotsApp;
-import org.example.vista.componentes.BotonComenzar;
-import org.example.vista.componentes.Eleccion;
-import org.example.vista.contenedores.BarraDeTitulo;
-import org.example.vista.contenedores.BloqueDeElecciones;
-import org.example.vista.contenedores.Encabezado;
+import org.robots.vista.RobotsApp;
+import org.robots.vista.componentes.BotonComenzar;
+import org.robots.vista.componentes.Eleccion;
+import org.robots.vista.contenedores.BarraDeTitulo;
+import org.robots.vista.contenedores.BloqueDeElecciones;
+import org.robots.vista.contenedores.Encabezado;
 
 import java.util.Objects;
 
-import static org.example.vista.utilidades.Constantes.*;
+import static org.robots.vista.utilidades.Constantes.*;
 
 public class VentanaMenuPrincipal extends VBox {
     private final VBox main;

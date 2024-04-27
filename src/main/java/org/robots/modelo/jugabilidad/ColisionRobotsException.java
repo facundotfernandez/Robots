@@ -1,6 +1,6 @@
-package org.example.modelo.jugabilidad;
+package org.robots.modelo.jugabilidad;
 
-import org.example.modelo.unidades.Robot;
+import org.robots.modelo.unidades.Robot;
 
 public class ColisionRobotsException extends Exception {
 

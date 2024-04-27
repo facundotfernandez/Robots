@@ -1,5 +1,6 @@
-module org.example {
+module org.robots {
     requires javafx.controls;
     requires jdk.jshell;
-    exports org.example.vista;
+    requires jdk.compiler;
+    exports org.robots.vista;
 }

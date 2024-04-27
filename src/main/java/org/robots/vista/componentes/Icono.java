@@ -1,4 +1,4 @@
-package org.example.vista.componentes;
+package org.robots.vista.componentes;
 
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;

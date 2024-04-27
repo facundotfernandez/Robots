@@ -1,4 +1,4 @@
-package org.example.modelo.tablero;
+package org.robots.modelo.tablero;
 
 public class CeldaOcupadaException extends Exception {
 

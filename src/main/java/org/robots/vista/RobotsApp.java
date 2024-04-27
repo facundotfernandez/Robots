@@ -1,4 +1,4 @@
-package org.example.vista;
+package org.robots.vista;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -14,16 +14,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.example.modelo.jugabilidad.Juego;
-import org.example.modelo.utilidades.Direccion;
-import org.example.vista.componentes.Boton;
-import org.example.vista.ventanas.VentanaJuego;
-import org.example.vista.ventanas.VentanaMenuPrincipal;
+import org.robots.modelo.jugabilidad.Juego;
+import org.robots.modelo.utilidades.Direccion;
+import org.robots.vista.componentes.Boton;
+import org.robots.vista.ventanas.VentanaJuego;
+import org.robots.vista.ventanas.VentanaMenuPrincipal;
 
 import java.util.Map;
 import java.util.Objects;
 
-import static org.example.vista.utilidades.Constantes.*;
+import static org.robots.vista.utilidades.Constantes.*;
 
 
 public class RobotsApp extends Application {

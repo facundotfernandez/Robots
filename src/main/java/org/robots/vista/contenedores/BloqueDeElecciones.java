@@ -1,4 +1,4 @@
-package org.example.vista.contenedores;
+package org.robots.vista.contenedores;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -7,7 +7,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import org.example.vista.componentes.Eleccion;
+import org.robots.vista.componentes.Eleccion;
 
 public class BloqueDeElecciones extends HBox {
 

@@ -1,4 +1,4 @@
-package org.example.modelo.utilidades;
+package org.robots.modelo.utilidades;
 
 public class StringUtil {
     public static String toProper(String input) {

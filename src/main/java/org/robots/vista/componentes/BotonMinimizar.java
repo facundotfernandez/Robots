@@ -1,4 +1,4 @@
-package org.example.vista.componentes;
+package org.robots.vista.componentes;
 
 import javafx.stage.Stage;
 

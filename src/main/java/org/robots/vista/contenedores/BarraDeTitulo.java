@@ -1,12 +1,12 @@
-package org.example.vista.contenedores;
+package org.robots.vista.contenedores;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
-import org.example.vista.componentes.Boton;
-import org.example.vista.componentes.BotonCerrar;
-import org.example.vista.componentes.BotonMinimizar;
-import org.example.vista.componentes.Icono;
+import org.robots.vista.componentes.Boton;
+import org.robots.vista.componentes.BotonCerrar;
+import org.robots.vista.componentes.BotonMinimizar;
+import org.robots.vista.componentes.Icono;
 
 public class BarraDeTitulo extends HBox {
 

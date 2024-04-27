@@ -1,6 +1,6 @@
-package org.example.modelo.unidades;
+package org.robots.modelo.unidades;
 
-import static org.example.modelo.utilidades.Constantes.MULTIPLICADOR_PUNTAJE;
+import static org.robots.modelo.utilidades.Constantes.MULTIPLICADOR_PUNTAJE;
 
 public class Robot extends Personaje {
 

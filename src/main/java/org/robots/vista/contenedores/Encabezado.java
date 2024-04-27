@@ -1,14 +1,14 @@
-package org.example.vista.contenedores;
+package org.robots.vista.contenedores;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import org.example.vista.componentes.Subtitulo;
-import org.example.vista.componentes.Titulo;
+import org.robots.vista.componentes.Subtitulo;
+import org.robots.vista.componentes.Titulo;
 
-import static org.example.vista.utilidades.Constantes.TITULO;
+import static org.robots.vista.utilidades.Constantes.TITULO;
 
 public class Encabezado extends HBox {
     private final VBox containerTitulo;

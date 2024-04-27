@@ -1,9 +1,9 @@
-package org.example.vista.contenedores;
+package org.robots.vista.contenedores;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import org.example.vista.componentes.Boton;
+import org.robots.vista.componentes.Boton;
 
 import java.util.LinkedList;
 

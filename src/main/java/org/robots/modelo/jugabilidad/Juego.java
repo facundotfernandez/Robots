@@ -1,11 +1,11 @@
-package org.example.modelo.jugabilidad;
+package org.robots.modelo.jugabilidad;
 
-import org.example.modelo.unidades.Jugador;
+import org.robots.modelo.unidades.Jugador;
 
 import java.util.Random;
 
-import static org.example.modelo.utilidades.Constantes.DIFICIL;
-import static org.example.modelo.utilidades.Constantes.FACIL;
+import static org.robots.modelo.utilidades.Constantes.DIFICIL;
+import static org.robots.modelo.utilidades.Constantes.FACIL;
 
 public class Juego {
     private final Jugador jugador;

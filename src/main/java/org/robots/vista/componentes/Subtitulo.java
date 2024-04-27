@@ -1,4 +1,4 @@
-package org.example.vista.componentes;
+package org.robots.vista.componentes;
 
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
