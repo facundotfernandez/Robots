@@ -244,7 +244,7 @@ public class VentanaJuego extends VBox {
                 }
             } else if (CONTROLES_BOTONES.containsKey(tecla)) {
                 if (CONTROLES_BOTONES.keySet().iterator().next() == tecla) RobotsApp.usarTP();
-                else esperaEleccionCelda = true;
+                else if (tpSeguros > 0) esperaEleccionCelda = true;
             }
         });
     }
