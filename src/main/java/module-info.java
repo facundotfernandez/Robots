@@ -1,4 +1,5 @@
-module org.example {
+module org.robots {
     requires javafx.controls;
-    exports org.example;
+    requires jdk.compiler;
+    exports org.robots;
 }
