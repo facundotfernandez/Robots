@@ -7,7 +7,7 @@ public class Personaje {
     private Punto ubicacion;
 
     /**
-     * Inicializa el Perosnaje con puntaje dado
+     * Inicializa el Personaje con puntaje dado
      *
      * @param puntaje Puntaje acumulado
      */

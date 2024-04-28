@@ -4,11 +4,12 @@ public class Jugador extends Personaje {
     private int tpSeguros;
 
     /**
-    * Inicializa el Jugador con con cantidad de tps seguros y su ubicacion en fila-columna
-    *@param tpSeguros TPSeguros disponibles inicialmente
-    *@param fila Fila de la ubicación del Jugador
-    *@param columna Columna de la ubicación del Jugador
-    */
+     * Inicializa el Jugador con con cantidad de tps seguros y su ubicacion en fila-columna
+     *
+     * @param tpSeguros TPSeguros disponibles inicialmente
+     * @param fila      Fila de la ubicación del Jugador
+     * @param columna   Columna de la ubicación del Jugador
+     */
     public Jugador(int tpSeguros, int fila, int columna) {
         super(0, fila, columna);
         this.tpSeguros = tpSeguros;
