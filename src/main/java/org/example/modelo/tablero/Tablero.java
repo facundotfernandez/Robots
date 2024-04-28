@@ -9,10 +9,11 @@ public class Tablero<T> {
     private final LinkedList<LinkedList<Celda<T>>> grilla;
 
     /**
-    * Inicializa el tablero con fila-columnas dadas
-    *@param filas
-    *@param columnas
-    */
+     * Inicializa el tablero con fila-columnas dadas
+     *
+     * @param filas    Dimension en filas
+     * @param columnas Dimension en columnas
+     */
     public Tablero(int filas, int columnas) {
         this.filas = filas;
         this.columnas = columnas;
@@ -20,9 +21,10 @@ public class Tablero<T> {
     }
 
     /**
-     *creea la matriz de tamaño filas x columnas
-     * @param filas
-     * @param columnas
+     * Crea la matriz de tamaño filas x columnas
+     *
+     * @param filas    Dimension en filas
+     * @param columnas Dimension en columnas
      * @return Matriz de listas enlazadas de listas enlazadas de Celdas<T>
      */
     private LinkedList<LinkedList<Celda<T>>> inicializarGrilla(int filas, int columnas) {
@@ -52,10 +54,11 @@ public class Tablero<T> {
 
     /**
      * Devuelve la celda en fila-columna verificando si está dentro de los limites de la Grilla
-     * @param fila
-     * @param columna
+     *
+     * @param fila    Fila dada a consultar
+     * @param columna Columna dada a consultar
      * @return celda en la localizacion fila-columna
-     * @throws CeldaInvalidaException
+     * @throws CeldaInvalidaException Si la celda no pertenece al Tablero
      */
     private Celda<T> getCelda(int fila, int columna) throws CeldaInvalidaException {
         estaDentro(fila, columna);
@@ -77,37 +80,11 @@ public class Tablero<T> {
     }
 
     /**
-     * ocupa la celda central
-     *
-     * @param ocupante
-     * @throws CeldaInvalidaException
-     * @throws CeldaOcupadaException
-     */
-    private void ocuparCeldaCentral(T ocupante) throws CeldaInvalidaException, CeldaOcupadaException {
-        getCeldaCentral().ocupar(ocupante);
-    }
-
-    /**
-     * ocupa una celda aleaoria
-     *
-     * @param ocupante
-     * @throws CeldaInvalidaException
-     * @throws CeldaOcupadaException
-     */
-    private void ocuparCeldaRandom(T ocupante) throws CeldaInvalidaException, CeldaOcupadaException {
-        Celda<T> celda;
-        do {
-            celda = getCeldaRandom();
-        } while (!celda.estaVacia());
-        celda.ocupar(ocupante);
-    }
-
-    /**
      * vrifica si una ubicacion fila-columna esta dentro del tablero
      *
-     * @param fila
-     * @param columna
-     * @throws CeldaInvalidaException
+     * @param fila    Fila dada a evaluar
+     * @param columna Columna dada a evaluar
+     * @throws CeldaInvalidaException Si la celda no pertenece al Tablero
      */
     private void estaDentro(int fila, int columna) throws CeldaInvalidaException {
         if (fila < 0 || fila >= filas || columna < 0 || columna >= columnas) {
@@ -116,10 +93,10 @@ public class Tablero<T> {
     }
 
     /**
-     * vrifica si una celda esta dentro del tablero
+     * verifica si una celda esta dentro del tablero
      *
-     * @param celda
-     * @throws CeldaInvalidaException
+     * @param celda Celda dada a evaluar
+     * @throws CeldaInvalidaException Si la celda no pertenece al Tablero
      */
     private void estaDentro(Celda<T> celda) throws CeldaInvalidaException {
         if (celda.getFila() < 0 || celda.getFila() >= filas || celda.getColumna() < 0 || celda.getColumna() >= columnas)
@@ -127,10 +104,10 @@ public class Tablero<T> {
     }
 
     /**
-     * @param celda
-     * @return lo que se encunetre<T> en una celda específica
-     * @throws CeldaInvalidaException
-     * @throws CeldaDesocupadaException
+     * @param celda Celda dada a evaluar
+     * @return El ocupante de tipo <T> en una celda específica
+     * @throws CeldaInvalidaException   Si la celda no pertenece al Tablero
+     * @throws CeldaDesocupadaException Si la celda no está ocupada
      */
     private T getOcupante(Celda<T> celda) throws CeldaInvalidaException, CeldaDesocupadaException {
         estaDentro(celda);
@@ -138,11 +115,11 @@ public class Tablero<T> {
     }
 
     /**
-     * @param fila
-     * @param columna
-     * @return lo que se encuentre en una fila-columna específica
-     * @throws CeldaInvalidaException
-     * @throws CeldaDesocupadaException
+     * @param fila    Fila dada a evaluar
+     * @param columna Columna dada a evaluar
+     * @return El ocupante de tipo <T> en una celda específica
+     * @throws CeldaInvalidaException   Si la celda no pertenece al Tablero
+     * @throws CeldaDesocupadaException Si la celda no está ocupada
      */
     public T getOcupante(int fila, int columna) throws CeldaInvalidaException, CeldaDesocupadaException {
         Celda<T> celda = getCelda(fila, columna);
@@ -150,25 +127,14 @@ public class Tablero<T> {
     }
 
     /**
-     * @param fila
-     * @param columna
-     * @return si la ubicacion en fila-columna está vacia
-     * @throws CeldaInvalidaException
-     */
-    private boolean estaVacia(int fila, int columna) throws CeldaInvalidaException {
-        estaDentro(fila, columna);
-        return grilla.get(fila).get(columna).estaVacia();
-    }
-
-    /**
      * mueve a la entidad en una fila-columna origen en una direccion determinada, si es que es la hay
      *
-     * @param filaOrigen
-     * @param columnaOrigen
-     * @param direccion
-     * @throws CeldaInvalidaException
-     * @throws CeldaDesocupadaException
-     * @throws CeldaOcupadaException
+     * @param filaOrigen    Fila de origen dada a mover en cierta dirección
+     * @param columnaOrigen Columna de origen dada a mover en cierta dirección
+     * @param direccion     Dirección del movimiento
+     * @throws CeldaInvalidaException   Si la celda no pertenece al Tablero
+     * @throws CeldaDesocupadaException Si la celda de origen a mover no está ocupada
+     * @throws CeldaOcupadaException    Si la celda de destino ya está ocupada
      */
     public void mover(int filaOrigen, int columnaOrigen, int[] direccion) throws CeldaInvalidaException, CeldaDesocupadaException, CeldaOcupadaException {
         Celda<T> origen = getCelda(filaOrigen, columnaOrigen);
@@ -179,13 +145,13 @@ public class Tablero<T> {
     /**
      * mueve a la entidad en una fila-columna origen en una fila-columna destino, si es que es la hay
      *
-     * @param filaOrigen
-     * @param columnaOrigen
-     * @param filaDestino
-     * @param columnaDestino
-     * @throws CeldaInvalidaException
-     * @throws CeldaDesocupadaException
-     * @throws CeldaOcupadaException
+     * @param filaOrigen     Fila de origen dada a mover
+     * @param filaDestino    Fila de destino dada
+     * @param columnaDestino Columna de destino dada
+     * @param columnaOrigen  Columna de origen dada a mover
+     * @throws CeldaInvalidaException   Si la celda no pertenece al Tablero
+     * @throws CeldaDesocupadaException Si la celda de origen a mover no está ocupada
+     * @throws CeldaOcupadaException    Si la celda de destino ya está ocupada
      */
     public void mover(int filaOrigen, int columnaOrigen, int filaDestino, int columnaDestino) throws CeldaInvalidaException, CeldaDesocupadaException, CeldaOcupadaException {
         Celda<T> origen = getCelda(filaOrigen, columnaOrigen);
@@ -194,10 +160,11 @@ public class Tablero<T> {
     }
 
     /**
-     *ubica al ocupante en una celda aleatoria
-     * @param ocupante
-     * @return
-     * @throws CeldaOcupadaException
+     * ubica al ocupante en una celda aleatoria
+     *
+     * @param ocupante Ocupante a ubicar
+     * @return Ubicación de la celda obtenida
+     * @throws CeldaOcupadaException Si la celda encontrada ya está ocupada
      */
     public int[] ubicar(T ocupante) throws CeldaOcupadaException {
         while (true) {
@@ -211,15 +178,11 @@ public class Tablero<T> {
         }
     }
 
-    public void ubicar(T ocupante, int fila, int columna) throws CeldaOcupadaException {
-        getCelda(fila, columna).ocupar(ocupante);
-    }
-
     /**
      * ubica en el centro del tablero al ocupante
      *
-     * @param ocupante
-     * @throws CeldaOcupadaException
+     * @param ocupante Ocupante a ubicar
+     * @throws CeldaOcupadaException Si la celda ya está ocupada
      */
     public void ubicarEnCentro(T ocupante) throws CeldaOcupadaException {
         getCeldaCentral().ocupar(ocupante);
@@ -228,9 +191,9 @@ public class Tablero<T> {
     /**
      * fuerza la ocupacion de una fila-columna
      *
-     * @param fila
-     * @param columna
-     * @param ocupante
+     * @param fila     Fila dada a ocupar
+     * @param columna  Columna dada a ocupar
+     * @param ocupante Ocupante a ubicar
      */
     public void forzarOcupacion(int fila, int columna, T ocupante) throws CeldaOcupadaException {
         Celda<T> celda = getCelda(fila, columna);

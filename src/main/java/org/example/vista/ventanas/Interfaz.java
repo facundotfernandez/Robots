@@ -1,6 +1,5 @@
-package org.example.vista;
+package org.example.vista.ventanas;
 
-import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
@@ -17,33 +16,32 @@ import javafx.stage.StageStyle;
 import org.example.modelo.jugabilidad.Juego;
 import org.example.modelo.utilidades.Direccion;
 import org.example.vista.componentes.Boton;
-import org.example.vista.ventanas.VentanaJuego;
-import org.example.vista.ventanas.VentanaMenuPrincipal;
 
 import java.util.Map;
 import java.util.Objects;
 
 import static org.example.vista.utilidades.Constantes.*;
 
-
-public class RobotsApp extends Application {
+public class Interfaz {
 
     private static Pane root;
     private static Stage escenario;
     private static Juego juego;
 
+
     /**
-     * Se lanza la aplicación
+     * Inicializa la interfaz creando un menú principal
      */
-    public static void main(String[] args) {
-        launch();
+    public Interfaz(Stage escenario) {
+        Interfaz.escenario = escenario;
+        iniciar(escenario);
     }
 
     /**
      * Se reemplaza el cursor actual por uno personalizado
      */
     public static void setCursor() {
-        Image imagenCursor = new Image(Objects.requireNonNull(RobotsApp.class.getResourceAsStream("/cursores/cursor.png")));
+        Image imagenCursor = new Image(Objects.requireNonNull(Interfaz.class.getResourceAsStream("/cursores/cursor.png")));
         escenario.getScene().setCursor(new ImageCursor(imagenCursor));
     }
 
@@ -77,7 +75,7 @@ public class RobotsApp extends Application {
     private static void reiniciarJuego() {
         var escenarioAnterior = escenario;
         escenarioAnterior.close();
-        RobotsApp.escenario = new Stage(StageStyle.UNDECORATED);
+        Interfaz.escenario = new Stage(StageStyle.UNDECORATED);
         iniciarMenuPrincipal();
         escenario.show();
     }
@@ -86,12 +84,10 @@ public class RobotsApp extends Application {
      * Se configura la ventana para que se pueda mover
      */
     private static void setVentanaMovible() {
-        root.setOnMousePressed(pressEvent -> {
-            root.setOnMouseDragged(dragEvent -> {
-                escenario.setX(dragEvent.getScreenX() - pressEvent.getSceneX());
-                escenario.setY(dragEvent.getScreenY() - pressEvent.getSceneY());
-            });
-        });
+        root.setOnMousePressed(pressEvent -> root.setOnMouseDragged(dragEvent -> {
+            escenario.setX(dragEvent.getScreenX() - pressEvent.getSceneX());
+            escenario.setY(dragEvent.getScreenY() - pressEvent.getSceneY());
+        }));
     }
 
     /**
@@ -131,7 +127,7 @@ public class RobotsApp extends Application {
         botonReiniciar.setOnAction(_ -> {
             alerta.setResult(ButtonType.OK);
             alerta.close();
-            RobotsApp.reiniciarJuego();
+            reiniciarJuego();
         });
 
         botonSalir.setOnAction(_ -> {
@@ -169,9 +165,7 @@ public class RobotsApp extends Application {
         }
         alerta.getDialogPane().setContent(controlesBox);
 
-        botonCerrar.setOnAction(_ -> {
-            alerta.setResult(new ButtonType("CERRAR", ButtonBar.ButtonData.OK_DONE));
-        });
+        botonCerrar.setOnAction(_ -> alerta.setResult(new ButtonType("CERRAR", ButtonBar.ButtonData.OK_DONE)));
         alerta.showAndWait().ifPresent(e -> {
             if (e == buttonTypeCerrar) alerta.close();
         });
@@ -240,13 +234,11 @@ public class RobotsApp extends Application {
     }
 
     /**
-     * Inicia el menú principal y hace visible el escenario
+     * Crea una nueva VentanaJuego con el un nuevo estado de Nivel
      *
      * @param escenario Escenario principal
      */
-    @Override
-    public void start(Stage escenario) {
-        RobotsApp.escenario = escenario;
+    private void iniciar(Stage escenario) {
         iniciarMenuPrincipal();
         escenario.show();
         mostrarControles();

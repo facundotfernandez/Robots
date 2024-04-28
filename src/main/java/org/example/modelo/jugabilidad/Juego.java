@@ -14,11 +14,12 @@ public class Juego {
     private boolean enJuego;
 
     /**
-    * Inicializa el Juego con dificultad, fila- columnas dadas
-    *@param dificultad
-    *@param filas
-    *@param columnas
-    */
+     * Inicializa el Juego con dificultad, fila- columnas dadas
+     *
+     * @param dificultad Dificultad del juego
+     * @param filas      Dimension en filas, del tablero
+     * @param columnas   Dimension en columnas, del tablero
+     */
     public Juego(int dificultad, int filas, int columnas) throws Exception {
         this.jugador = new Jugador((int) Math.ceil((((Math.pow(dificultad, 2) * 10) / Math.exp(dificultad)))), filas / 2, columnas / 2);
         validarDificultad(dificultad);
@@ -31,8 +32,8 @@ public class Juego {
     /**
      * verifica si la dificultad del Juego
      *
-     * @param dificultad
-     * @throws Exception
+     * @param dificultad Dificultad del juego
+     * @throws Exception Si la dificultad no se encuentra en el rango establecido
      */
     private void validarDificultad(int dificultad) throws Exception {
         if (dificultad < FACIL || dificultad > DIFICIL) {
@@ -43,7 +44,7 @@ public class Juego {
     /**
      * Avanza de Nivel y lo inicializa
      *
-     * @throws Exception
+     * @throws Exception Si la dificultad no se encuentra en el rango establecido
      */
     private void avanzarNivel() throws Exception {
         this.nivel = new Nivel(nivel.getId() + 1, jugador, dificultad, nivel.getFilas(), nivel.getColumnas());
@@ -80,8 +81,8 @@ public class Juego {
     /**
      * intenta jugar el turno en una direccion; si no quedan robots avanza de nivel; si arroja ColisionConJugadorException termina el juego.
      *
-     * @param direccion
-     * @throws Exception
+     * @param direccion Dirección del movimiento del jugador
+     * @throws Exception Error inesperado
      */
     public void jugarTurno(int[] direccion) throws Exception {
         try {
@@ -95,9 +96,9 @@ public class Juego {
     /**
      * Usa el tpSeguro en una fila-columnamoviendo al jugador a la posición especificada
      *
-     * @param fila
-     * @param columna
-     * @throws Exception
+     * @param fila    Fila elegida por el jugador
+     * @param columna Columna elegida por el jugador
+     * @throws Exception Error inesperado
      */
     public void usarTPSeguro(int fila, int columna) throws Exception {
         jugador.usarTPseguro();
@@ -107,7 +108,7 @@ public class Juego {
     /**
      * usa el TP a una fila-columna aleatorias dentro de las filas-columnas del tablero
      *
-     * @throws Exception
+     * @throws Exception Error inesperado
      */
     public void usarTP() throws Exception {
         var fila = new Random().nextInt(nivel.getFilas());
@@ -118,9 +119,9 @@ public class Juego {
     /**
      * intenta jugar un turno en el nivel a fila-columna. Si no hay robots, avanza al siguiente nivel. Si se produce una colisión, se llama a juegoPerdido
      *
-     * @param fila
-     * @param columna
-     * @throws Exception
+     * @param fila    Fila elegida por el jugador
+     * @param columna Columna elegida por el jugador
+     * @throws Exception Error inesperado
      */
     private void usarTP(int fila, int columna) throws Exception {
         try {

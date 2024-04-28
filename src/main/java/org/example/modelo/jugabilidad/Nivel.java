@@ -23,13 +23,14 @@ public class Nivel {
     private final LinkedList<Robot> robots;
 
     /**
-    * Inicializa el Nivel con un id, juagdor, dificultad y filas-columnas dados
-    *@param id
-    *@paramja jugador
-    *@param dificultad
-    *@param filas
-    *@param columnas
-    */
+     * Inicializa el Nivel con un id, jugador, dificultad y filas-columnas dados
+     *
+     * @param id         ID del Nivel
+     * @param jugador    Jugador del nivel
+     * @param dificultad Dificultad del Nivel
+     * @param filas      Dimension en filas, del tablero
+     * @param columnas   Dimension en columnas, del tablero
+     */
     public Nivel(int id, Jugador jugador, int dificultad, int filas, int columnas) {
         this.id = id;
         var cantRobots = id * dificultad;
@@ -46,17 +47,10 @@ public class Nivel {
     }
 
     /**
-     * @return La lista<Robot> del Nivel
-     */
-    public LinkedList<Robot> getRobots() {
-        return robots;
-    }
-
-    /**
      * crea una lista de robots de cantidad definida por parámetro
      *
-     * @param cantidad
-     * @return lista<Robots>
+     * @param cantidad Cantidad de robots a crear
+     * @return Lista de Robots de tipo aleatorio
      */
     public LinkedList<Robot> crearRobots(int cantidad) {
         LinkedList<Robot> listado = new LinkedList<>();
@@ -83,8 +77,8 @@ public class Nivel {
     /**
      * Ubica el personaje en una celda aleatoria mediante "tablero.ubicar"
      *
-     * @param ocupante
-     * @throws CeldaOcupadaException
+     * @param ocupante Ocupante a ubicar
+     * @throws CeldaOcupadaException Si la celda está ocupada
      */
     public void ubicar(Personaje ocupante) throws CeldaOcupadaException {
         var ubicacion = tablero.ubicar(ocupante);
@@ -94,11 +88,11 @@ public class Nivel {
     /**
      * Ubica el personaje en una fila-columna mediante "tablero.mover", pudiendo o no colisionar
      *
-     * @param ocupante
-     * @throws ColisionConJugadorException
-     * @throws CeldaOcupadaException
+     * @param ocupante Ocupante a ubicar
+     * @throws CeldaOcupadaException    Si la celda está ocupada
+     * @throws CeldaDesocupadaException Si la celda de origen está vacía, porque no tiene ocupante dicha celda
      */
-    public void ubicar(Personaje ocupante, int fila, int columna) throws ColisionConJugadorException, CeldaDesocupadaException, CeldaOcupadaException {
+    public void ubicar(Personaje ocupante, int fila, int columna) throws CeldaDesocupadaException, CeldaOcupadaException {
         tablero.mover(ocupante.getFila(), ocupante.getColumna(), fila, columna);
         ocupante.mover(fila, columna);
     }
@@ -106,8 +100,8 @@ public class Nivel {
     /**
      * Ubica el personaje en la celda central mediante "tablero.ubicarEnCentro"
      *
-     * @param ocupante
-     * @throws CeldaOcupadaException
+     * @param ocupante Ocupante a ubicar
+     * @throws CeldaOcupadaException Si la celda está ocupada
      */
     public void ubicarEnCentro(Personaje ocupante) throws CeldaOcupadaException {
         tablero.ubicarEnCentro(ocupante);
@@ -117,7 +111,7 @@ public class Nivel {
     /**
      * verifica si Personaje se trata de un robot
      *
-     * @param personaje
+     * @param personaje Personaje a evaluar
      * @return True en el caso que sea Robot, False en caso contrario
      */
     private boolean esRobot(Personaje personaje) {
@@ -127,7 +121,7 @@ public class Nivel {
     /**
      * verifica si Personaje se trata de un jugador
      *
-     * @param personaje
+     * @param personaje Personaje a evaluar
      * @return True en el caso que sea Jugador, False en caso contrario
      */
     private boolean esJugador(Personaje personaje) {
@@ -153,6 +147,15 @@ public class Nivel {
         }
     }
 
+    /**
+     * Se encarga de manejar el caso de colisión entre personajes debido a un desplazamiento
+     *
+     * @param personaje Personaje a mover
+     * @param direccion Direccion del movimiento
+     * @throws CeldaOcupadaException       Celda de destino está ocupada y ocurre una colisión
+     * @throws CeldaDesocupadaException    Celda de origen no tiene un ocupante y se intenta mover
+     * @throws ColisionConJugadorException Jugador colisiona con un Robot
+     */
     private void manejarColisiones(Personaje personaje, int[] direccion) throws CeldaDesocupadaException, ColisionConJugadorException, CeldaOcupadaException, ColisionRobotsException {
         var ocupanteDestino = tablero.getOcupante(personaje.getFila() + direccion[0], personaje.getColumna() + direccion[1]);
 
@@ -181,10 +184,10 @@ public class Nivel {
     /**
      * Mueve a los robots en funcion del movimiento del jugador, manjenado todos los casos borde
      *
-     * @param ubicacion
-     * @throws CeldaDesocupadaException
-     * @throws ColisionConJugadorException
-     * @throws CeldaOcupadaException
+     * @param ubicacion Ubicación del Jugador necesaria para orientar el movimiento de "seguimiento"
+     * @throws CeldaDesocupadaException    Si la celda de origen está vacía, desde la cual se mueve al Robot
+     * @throws ColisionConJugadorException Si colisiona con un Jugador
+     * @throws CeldaOcupadaException       Si la celda está ocupada
      */
     public void moverRobots(Punto ubicacion) throws CeldaDesocupadaException, ColisionConJugadorException, CeldaOcupadaException {
         var robotsAEliminar = new LinkedList<Robot>();
@@ -202,9 +205,9 @@ public class Nivel {
     }
 
     /**
-     * inicia a los PErsonajes en el tablero; al Jugador en el centro, y a los robots en sus celdas
+     * inicia a los Personajes en el tablero; al Jugador en el centro, y a los robots en sus celdas
      *
-     * @throws CeldaOcupadaException
+     * @throws CeldaOcupadaException Si la celda está ocupada
      */
     public void iniciar() throws CeldaOcupadaException {
         ubicarEnCentro(jugador);

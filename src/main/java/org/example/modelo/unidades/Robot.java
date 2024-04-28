@@ -9,7 +9,7 @@ public class Robot extends Personaje {
     /**
      * Inicializa el Robot con multiplicador dado
      *
-     * @param multiplicador
+     * @param multiplicador Multiplicador del Robot
      */
     public Robot(int multiplicador) {
         super(multiplicador * MULTIPLICADOR_PUNTAJE);
@@ -19,9 +19,9 @@ public class Robot extends Personaje {
     /**
      * Inicializa al Robot con multiplicador, fila-columna dados
      *
-     * @param multiplicador 
-     *@param fila
-     * @param columna
+     * @param multiplicador Multiplicador del Robot
+     * @param fila          Fila inicial
+     * @param columna       Columna Inicial
      */
     public Robot(int multiplicador, int fila, int columna) {
         super(multiplicador * MULTIPLICADOR_PUNTAJE, fila, columna);
@@ -34,10 +34,10 @@ public class Robot extends Personaje {
     public int getMultiplicador() {
         return multiplicador;
     }
-    
+
     /**
-    *Destruye al robot, anulando su multiplicador
-    */
+     * Destruye al robot, anulando su multiplicador
+     */
     public void destruir() {
         this.multiplicador *= 0;
     }

@@ -17,7 +17,6 @@ import org.example.modelo.unidades.Jugador;
 import org.example.modelo.unidades.Personaje;
 import org.example.modelo.unidades.Robot;
 import org.example.modelo.utilidades.Direccion;
-import org.example.vista.RobotsApp;
 import org.example.vista.componentes.Boton;
 import org.example.vista.contenedores.BarraDeTitulo;
 import org.example.vista.contenedores.BloqueDeBotones;
@@ -36,7 +35,7 @@ public class VentanaJuego extends VBox {
     private final int filasTablero;
     private final int columnasTablero;
     private final int tpSeguros;
-    Stage escenario;
+    private final Stage escenario;
     private GridPane seccionPrincipal;
     private int orientacionCursor;
 
@@ -226,8 +225,8 @@ public class VentanaJuego extends VBox {
                     int dY = corrimiento[0];
                     int dX = corrimiento[1];
 
-                    if (validarEstaDentroConCorrimiento(fila, col, dY, dX)) RobotsApp.usarTP(fila - dY, col - dX);
-                } else RobotsApp.jugarTurno(calcularDistancia(event));
+                    if (validarEstaDentroConCorrimiento(fila, col, dY, dX)) Interfaz.usarTP(fila - dY, col - dX);
+                } else Interfaz.jugarTurno(calcularDistancia(event));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -238,12 +237,12 @@ public class VentanaJuego extends VBox {
             esperaEleccionCelda = false;
             if (CONTROLES.containsKey(tecla)) {
                 try {
-                    RobotsApp.jugarTurno(CONTROLES.get(tecla).getDireccion());
+                    Interfaz.jugarTurno(CONTROLES.get(tecla).getDireccion());
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             } else if (CONTROLES_BOTONES.containsKey(tecla)) {
-                if (CONTROLES_BOTONES.keySet().iterator().next() == tecla) RobotsApp.usarTP();
+                if (CONTROLES_BOTONES.keySet().iterator().next() == tecla) Interfaz.usarTP();
                 else if (tpSeguros > 0) esperaEleccionCelda = true;
             }
         });
@@ -271,11 +270,11 @@ public class VentanaJuego extends VBox {
      */
     private void setControladorBoton(Boton boton, int i) {
         boton.setOnAction(_ -> {
-            if (i == 0) RobotsApp.usarTP();
+            if (i == 0) Interfaz.usarTP();
             else if (i == 1) esperaEleccionCelda = true;
             else {
                 try {
-                    RobotsApp.jugarTurno(CENTRO.getDireccion());
+                    Interfaz.jugarTurno(CENTRO.getDireccion());
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }

@@ -5,7 +5,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import org.example.vista.RobotsApp;
 import org.example.vista.componentes.BotonComenzar;
 import org.example.vista.componentes.Eleccion;
 import org.example.vista.contenedores.BarraDeTitulo;
@@ -47,7 +46,7 @@ public class VentanaMenuPrincipal extends VBox {
                 int[] userData = new int[]{DIFICULTADES.get(eleccionDificultades.getValue()), eleccionFilas.getValue(), eleccionColumnas.getValue()};
                 botonComenzarJuego.setUserData(userData);
                 try {
-                    RobotsApp.iniciarJuego(userData[0], userData[1], userData[2]);
+                    Interfaz.iniciarJuego(userData[0], userData[1], userData[2]);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }

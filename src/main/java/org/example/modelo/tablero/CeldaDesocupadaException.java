@@ -10,7 +10,4 @@ public class CeldaDesocupadaException extends Exception {
         super(message);
     }
 
-    public CeldaDesocupadaException(String message, int fila, int columna) {
-        super(message + " (" + fila + "," + columna + ")");
-    }
 }
