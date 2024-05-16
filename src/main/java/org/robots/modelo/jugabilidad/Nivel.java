@@ -192,11 +192,9 @@ public class Nivel {
     public void moverRobots(Punto ubicacion) throws CeldaDesocupadaException, ColisionConJugadorException, CeldaOcupadaException {
         var robotsAEliminar = new LinkedList<Robot>();
         for (Robot robot : robots) {
-            int[] direccion = Direccion.calcularDistancia(robot.getFila(), robot.getColumna(), ubicacion.fila(), ubicacion.columna());
-            direccion[0] *= robot.getMultiplicador();
-            direccion[1] *= robot.getMultiplicador();
             try {
-                mover(robot, direccion);
+                for (int i = 0; i < robot.getMultiplicador(); i++)
+                    mover(robot, Direccion.calcularDistancia(robot.getFila(), robot.getColumna(), ubicacion.fila(), ubicacion.columna()));
             } catch (ColisionRobotsException e) {
                 robotsAEliminar.addAll(List.of(e.getRobotOrigen(), e.getRobotDestino()));
             }
